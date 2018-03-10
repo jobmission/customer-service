@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css"
+          th:href="@{/assets/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../static/assets/web-fonts-with-css/css/fontawesome-all.min.css"
+          th:href="@{/assets/web-fonts-with-css/css/fontawesome-all.min.css}"/>
+    <style>
+        .message-container {
+            max-height: 280px;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-header p-1">
+            <div class="input-group">
+                <input type="text" name="username" class="form-control username" required="required" placeholder="您的称呼"
+                       aria-label="您的称呼"
+                       aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary connect" type="button"><i class="fa fa-comments "></i>连接
+                    </button>
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary disconnect d-none" type="button">断开连接</button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body  p-1">
+            <form class="d-none message-form" onsubmit="return false;">
+                <div class="message-container">
+                    <ul class="list-group list-group-flush message-list">
+                        <li class="list-group-item px-0 py-1 customer-message-template d-none">提问</li>
+                        <li class="list-group-item px-0 py-1 text-right system-message-template d-none">
+                            <span class="system-message pr-1">回答</span><span
+                                class="badge badge-primary badge-pill">系统</span>
+                            <p class="small p-0 m-0 time text-right"></p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" id="message" placeholder="内容"/>
+                </div>
+                <input type="button" class="btn btn-primary btn-sm send" value="发送"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="../static/assets/jquery-3.3.1.min.js"
+        th:src="@{/assets/jquery-3.3.1.min.js}"></script>
+<script src="../static/assets/bootstrap/js/bootstrap.min.js"
+        th:src="@{/assets/bootstrap/js/bootstrap.min.js}"></script>
+<script src="../static/assets/sockjs.min.js"
+        th:src="@{/assets/sockjs.min.js}"></script>
+<script src="../static/assets/stomp.min.js"
+        th:src="@{/assets/stomp.min.js}"></script>
+<script src="../static/assets/moment-with-locales.min.js"
+        th:src="@{/assets/moment-with-locales.min.js}"></script>
+<script type="text/javascript">
+    /*<![CDATA[*/
+
+    var stompClient = null;
+
+
+    //连接
+    function connect() {
+        var username = $(".username").val();
+        if (username == null || username == "" || username.trim() == "") {
+            alert("请输入您的称呼！");
+            $(".username").focus();
+            return false;
+        }
+        var socket = new SockJS('/my-websocket');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            console.log("frame =" + JSON.stringify(frame));
+            // 订阅
+            stompClient.subscribe('/topic/announce', function (data) {
+                console.log("announce=" + data.body);
+                /*var $systemMessage = $(".system-message-template").clone().removeClass("d-none system-message-template");
+                $systemMessage.find(".system-message").text(JSON.parse(data.body).message);
+                 var momentTime = moment(JSON.parse(data.body).date);
+                $systemMessage.find(".time").text(momentTime.format("HH:mm:ss"));
+                $systemMessage.appendTo($(".message-list"));
+
+                $(".message-container").scrollTop($(".message-container")[0].scrollHeight);*/
+
+                /*会话维持*/
+                $.ajax({
+                    type: 'POST',
+                    url: "/refreshSession",
+                    success: function (result) {
+                        console.log(JSON.stringify(result));
+                    }
+                });
+            });
+            // 订阅
+            stompClient.subscribe("/user/queue/talk", function (data) {
+                console.log("message=" + data.body);
+
+                var $systemMessage = $(".system-message-template").clone().removeClass("d-none system-message-template");
+                $systemMessage.find(".system-message").text(JSON.parse(data.body).message);
+                var momentTime = moment(JSON.parse(data.body).date);
+                $systemMessage.find(".time").text(momentTime.format("HH:mm:ss"));
+                $systemMessage.appendTo($(".message-list"));
+
+                $(".message-container").scrollTop($(".message-container")[0].scrollHeight);
+            });
+
+            // 订阅
+            stompClient.subscribe("/user/queue/conversation/establish", function (data) {
+                console.log("conversation establish=" + data.body);
+                if (JSON.parse(data.body).status == 20000) {
+                    $(".message-form").removeClass("d-none");
+                    $(".username").prop("readonly", "readonly");
+                    $(".connect").addClass("d-none");
+                    $(".disconnect").removeClass("d-none");
+                } else {
+                    alert(JSON.parse(data.body).message);
+                    disconnect();
+                }
+            });
+
+            stompClient.send("/app/setUsername", {}, JSON.stringify({
+                'username': username
+            }));
+        }, function (error) {
+            // 连接失败时（服务器响应 ERROR 帧）的回调方法
+            console.log('连接失败【' + error + '】');
+            return false;
+        });
+    }
+    ;
+
+    function disconnect() {
+        if (stompClient != null) {
+            stompClient.disconnect(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: "/logout",
+                    success: function (result) {
+                        console.log(JSON.stringify(result));
+                    }
+                });
+            });
+        }
+
+        $(".disconnect").addClass("d-none");
+        $(".connect").removeClass("d-none");
+        $(".message-form").addClass("d-none");
+        $(".username").removeAttr("readonly");
+
+
+    }
+
+    function send() {
+        var message = $("#message").val();
+        if (message == null || message == "" || message.trim() == "") {
+            return false;
+        }
+        message = message.trim();
+        stompClient.send("/app/send", {}, JSON.stringify({
+            'message': message
+        }));
+        $(".customer-message-template").clone().removeClass("d-none customer-message-template").text(message).appendTo($(".message-list"));
+        $("#message").val("");
+
+        $(".message-container").scrollTop($(".message-container")[0].scrollHeight);
+    }
+
+    $(".connect").on("click", function () {
+        connect();
+    });
+
+    $(".disconnect").on("click", function () {
+        disconnect();
+    });
+
+    $(".send").on("click", function () {
+        send();
+    });
+
+    $('#message').on('keypress', function (event) {
+        if (event.keyCode == "13") {
+            send();
+        }
+    });
+
+    /*]]>*/
+</script>
+</body>
+</html>

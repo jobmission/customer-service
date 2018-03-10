@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>客服管理</title>
+    <link/>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+    <header class="main-header" th:replace="backend/layout/main :: menu_top">
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar" th:replace="backend/layout/main :: menu_left('members')">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <!-- /.sidebar -->
+    </aside>
+
+    <section>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    客服管理vv
+                    <small></small>
+                </h1>
+            </section>
+
+            <!-- Main content -->
+            <section class="content gridContainer">
+                <table id="jqGrid"></table>
+                <div id="jqGridPager"></div>
+                <br/>
+            </section>
+            <section class="content">
+                <div>
+                    <button id="createNew" class="btn btn-primary">添加</button>
+                </div>
+                <form class="form-horizontal hidden" id="detailsForm">
+
+                    <input type="hidden" value="" id="id"/>
+                    <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">账号名</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="username" placeholder="账号名"
+                                   required="required"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="realName" class="col-sm-2 control-label">姓名</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="realName" placeholder="姓名" required="required"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="col-sm-2 control-label">密码</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="password" placeholder="密码"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberCard" class="col-sm-2 control-label">会员卡号</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="memberCard" placeholder="会员卡号"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="introducer" class="col-sm-2 control-label">推荐人卡号</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="introducer" placeholder="推荐人卡号"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address" class="col-sm-2 control-label">联系地址</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="address" placeholder="联系地址"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-2">
+                            <button type="button" class="btn btn-info" id="update">保存</button>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button" class="btn btn-danger hidden" id="delete">禁用</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            <!-- /.content -->
+            <!-- /.content -->
+        </div>
+    </section>
+</div>
+</section>
+<!-- /.content-wrapper -->
+<footer class="main-footer" th:replace="backend/layout/main :: footer">
+</footer>
+</div>
+<th:block th:replace="backend/layout/main :: common_js"/>
+<th:block th:inline="javascript">
+    <!-- We support more than 40 localizations -->
+    <script type="text/javascript" th:src="@{/common/jqGrid-master/js/i18n/grid.locale-cn.js}"></script>
+    <!-- This is the Javascript file of jqGrid -->
+    <script type="text/javascript" th:src="@{/common/jqGrid-master/js/jquery.jqGrid.min.js}"></script>
+    <!-- The link to the CSS that the grid needs -->
+    <link rel="stylesheet" type="text/css" media="screen"
+          th:href="@{/common/jqGrid-master/css/ui.jqgrid-bootstrap.css}"/>
+    <script>
+        $.jgrid.defaults.width = 1000;
+        $.jgrid.defaults.responsive = true;
+        $.jgrid.defaults.styleUI = 'Bootstrap';
+    </script>
+    <script>
+
+        function formatBoolean(cellValue, options, rowObject) {
+            if (cellValue == null || cellValue == "") {
+                return "";
+            } else if (cellValue == true) {
+                return "是";
+            } else {
+                return "否";
+            }
+        }
+
+        function formatStatus(cellValue, options, rowObject) {
+            if (cellValue == null || cellValue == "") {
+                return "";
+            } else if (cellValue == -1) {
+                return "是";
+            } else {
+                return "否";
+            }
+        }
+
+        function formatDate(cellValue, options, rowObject) {
+            if (cellValue != null && cellValue != "") {
+                var day = moment(cellValue);
+                var formatted = day.format("YYYY-MM-DD HH:mm:ss");
+                return formatted;
+            } else {
+                return "";
+            }
+
+        }
+
+        function formatButton(cellValue, options, rowObject) {
+
+            var userId = rowObject.id;
+            var buttonEdit = "<button class='btn btn-info btn-edit' data-user-id=" + userId + ">编辑</button>";
+            return buttonEdit ;
+        }
+
+        $(document).ready(function () {
+            $("#jqGrid").jqGrid({
+                url: "/backend/member/list",
+                datatype: "json",
+                mtype: 'post',
+                colModel: [
+                    {label: 'id', name: 'id', key: true, width: 130, hidden: true},
+                    {label: '登录名', name: 'username', width: 150},
+                    {label: '是否禁用', name: 'recordStatus', width: 50, formatter: formatStatus},
+                    {label: '创建时间', name: 'dateCreated', formatter: formatDate, width: 150},
+                    {label: '操作', formatter: formatButton, width: 210}
+                ],
+                jsonReader: {
+                    repeatitems: false,
+                    id: "id",
+                    root: "objectElements",
+                    page: "currentPage",
+                    total: "totalPage",
+                    records: "total"
+                },
+                sortorder: 'desc',
+                width: $(window).width() * 0.80,
+                shrinkToFit: false,
+                height: 230,
+                rowNum: 10,
+                viewrecords: true,
+                caption: '客服管理',
+                onSelectRow: function () {
+                    return false;
+                },
+                pager: "#jqGridPager"
+            }).trigger("reloadGrid");
+
+            $("#jqGrid").navGrid("#jqGridPager", {
+                edit: false,
+                add: false,
+                del: false,
+                search: false,
+                refresh: true,
+                view: false,
+                position: "left",
+                cloneToTop: false
+            });
+
+            $(".gridContainer").on("click", ".btn-edit", function () {
+                var userId = $(this).data("user-id");
+                $("#detailsForm").removeClass("hidden");
+                var url = "/userAccount/details?id=" + userId;
+                $.get(url, function (data) {
+                    $("#id").val(data.id);
+                    $("#username").val(data.username);
+                    $("#password").val();
+                    $("#detailsForm #delete").removeClass("hidden");
+                    $("#message").removeClass("bg-danger").html("");
+                    $("#message").removeClass("bg-success").html("");
+                });
+            });
+
+
+            $("#update").click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/backend/member/details',
+                    data: {
+                        id: $("#id").val(),
+                        username: $("#username").val(),
+                        realName: $("#realName").val(),
+                        address: $("#address").val(),
+                        introducer: $("#introducer").val(),
+                        memberCard: $("#memberCard").val(),
+                        password: $("#password").val()
+                    },
+                    success: function (data) {
+                        if (data.status == 20000) {
+                            $("#jqGrid").trigger("reloadGrid");
+                            $("#createNew").trigger("click");
+                            $("#detailsForm").addClass("hidden");
+                            alert("保存成功!");
+                        } else {
+                            alert(data.message);
+                        }
+                    }
+                });
+            });
+
+            $("#delete").click(function () {
+                var r = confirm("Delete ?");
+                if (r == true) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/backend/member/details',
+                        data: {id: $("#id").val(), deleteOperation: true},
+                        success: function (data) {
+                            $("#jqGrid").trigger("reloadGrid");
+                            $("#createNew").trigger("click");
+                        }
+                    });
+                }
+
+            });
+
+            $("#createNew").click(function () {
+                $("#detailsForm").removeClass("hidden");
+                $("#detailsForm #delete").addClass("hidden");
+                $("#detailsForm #id").val("");
+                $("#detailsForm #username").val("");
+                $("#detailsForm #password").val("");
+            });
+
+        });
+    </script>
+</th:block>
+
+<!-- Modal -->
+<div class="modal fade" id="withdrawModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title text-center"><span id="withdrawMemberCard"></span>提现</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="withdrawForm">
+                    <input type="hidden" name="userId" id="withdrawUserId"/>
+                    <input type="hidden" name="balance" id="balance"/>
+                    <div class="form-group">
+                        <label for="withdrawAmount" class="col-sm-2 control-label">提现金额</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="amount" id="withdrawAmount"
+                                   placeholder="提现金额">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentChannel" class="col-sm-2 control-label">付款渠道</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="paymentChannel" id="paymentChannel" placeholder="付款渠道">
+                                <option value="现金">现金</option>
+                                <option value="微信">微信</option>
+                                <option value="支付宝">支付宝</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-confirm-withdraw">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="rechargeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title text-center"><span id="rechargeMemberCard"></span>充值</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="rechargeForm">
+                    <input type="hidden" name="userId" id="rechargeUserId"/>
+                    <div class="form-group">
+                        <label for="rechargeAmount" class="col-sm-2 control-label">充值金额</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="amount" id="rechargeAmount"
+                                   placeholder="充值金额">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="withdrawPaymentChannel" class="col-sm-2 control-label">付款渠道</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="paymentChannel" id="withdrawPaymentChannel" placeholder="付款渠道">
+                                <option value="现金">现金</option>
+                                <option value="微信">微信</option>
+                                <option value="支付宝">支付宝</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="rechargeType" class="col-sm-2 control-label">充值类型</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="rechargeType" id="rechargeType" placeholder="充值类型">
+                                <option value="充值">充值</option>
+                                <option value="奖励">奖励</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-confirm-recharge">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
