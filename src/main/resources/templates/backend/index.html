@@ -183,6 +183,10 @@
         if (message == null || message == "" || message.trim() == "") {
             return false;
         }
+
+        if ($(".conversation-item.active").length == 0) {
+            return false;
+        }
         message = message.trim();
         stompClient.send("/app/reply", {}, JSON.stringify({
             'message': message,
@@ -200,7 +204,8 @@
     });
 
     $(".disconnect").on("click", function () {
-        disconnect();
+        /*disconnect();*/
+        window.location.href = "/logout";
     });
 
     $(".conversation-message-wrapper").on("click", '.send', function () {

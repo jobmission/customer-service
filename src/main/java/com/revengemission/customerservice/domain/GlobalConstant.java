@@ -43,6 +43,7 @@ public class GlobalConstant {
 
     public final static String ROLE_SUPER = "ROLE_SUPER";//超级管理员
     public final static String ROLE_ADMIN = "ROLE_ADMIN";//管理员
+    public final static String ROLE_COMMISSIONER = "ROLE_COMMISSIONER";//客服人员
     public final static String ROLE_USER = "ROLE_USER";//普通用户
     public final static String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";//普通用户
 

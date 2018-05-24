@@ -10,7 +10,7 @@ import java.util.List;
 public class JsonObjects<T> implements Serializable {
     private List<T> objectElements;
     private Integer currentPage;
-    private Integer totalPage;
+    private Long totalPage;
     private Long total;
 
 
@@ -26,11 +26,11 @@ public class JsonObjects<T> implements Serializable {
         this.currentPage = currentPage;
     }
 
-    public Integer getTotalPage() {
+    public Long getTotalPage() {
         return totalPage;
     }
 
-    public void setTotalPage(Integer totalPage) {
+    public void setTotalPage(Long totalPage) {
         this.totalPage = totalPage;
     }
 

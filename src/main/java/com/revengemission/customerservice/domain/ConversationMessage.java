@@ -15,4 +15,5 @@ public class ConversationMessage {
     private String messageTo;
     private String username;
     private Date date;
+    private Integer status;
 }

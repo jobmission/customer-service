@@ -40,7 +40,7 @@ public class AdminController extends BaseController {
         if (conversationEntityList != null) {
             model.addAttribute("conversationList", conversationEntityList);
         }
-        return "admin/index";
+        return "backend/index";
     }
 
     /*
@@ -54,6 +54,7 @@ public class AdminController extends BaseController {
         conversationMessage.setMessageFrom(principal.getName());
         conversationMessage.setMessageTo(message.getMessageTo());
         conversationMessage.setMessage(message.getMessage());
+        conversationMessage.setStatus(0);
         conversationMessageService.create(conversationMessage);
         message.setDate(new Date());
         messagingTemplate.convertAndSendToUser(message.getMessageTo(),

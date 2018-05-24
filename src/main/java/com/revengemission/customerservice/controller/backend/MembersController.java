@@ -15,7 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping(value = "/userAccount")
+@RequestMapping(value = "/admin/userAccount")
 public class MembersController extends BaseController {
 
     private final org.slf4j.Logger log = LoggerFactory.getLogger(this.getClass());
@@ -28,7 +28,7 @@ public class MembersController extends BaseController {
     @GetMapping(value = {"/", ""})
     public String master(Model model,
                          @RequestParam(value = "id", required = false, defaultValue = "1") long id) {
-        return "admin/userAccounts";
+        return "backend/userAccounts";
     }
 
     @PostMapping(value = "/list")
@@ -38,7 +38,7 @@ public class MembersController extends BaseController {
                                                 @RequestParam(value = "page", defaultValue = "1") Integer pageNum,
                                                 @RequestParam(value = "sidx", defaultValue = "id") String sortField,
                                                 @RequestParam(value = "sord", defaultValue = "desc") String sortOrder) {
-        return userAccountService.list(pageNum, pageSize, sortField, sortOrder);
+        return userAccountService.listCommissioners(pageNum, pageSize, sortField, sortOrder);
     }
 
     @GetMapping(value = "/details")

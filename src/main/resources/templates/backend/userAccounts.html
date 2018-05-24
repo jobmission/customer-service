@@ -7,10 +7,10 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-    <header class="main-header" th:replace="backend/layout/main :: menu_top">
+    <header class="main-header" th:replace="backend/layout :: menu_top">
     </header>
     <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar" th:replace="backend/layout/main :: menu_left('members')">
+    <aside class="main-sidebar" th:replace="backend/layout :: menu_left('members')">
         <!-- sidebar: style can be found in sidebar.less -->
         <!-- /.sidebar -->
     </aside>
@@ -21,7 +21,7 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    客服管理vv
+                    客服管理
                     <small></small>
                 </h1>
             </section>
@@ -61,24 +61,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="memberCard" class="col-sm-2 control-label">会员卡号</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" id="memberCard" placeholder="会员卡号"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="introducer" class="col-sm-2 control-label">推荐人卡号</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" id="introducer" placeholder="推荐人卡号"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="address" class="col-sm-2 control-label">联系地址</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" id="address" placeholder="联系地址"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-2">
                             <button type="button" class="btn btn-info" id="update">保存</button>
                         </div>
@@ -95,10 +77,10 @@
 </div>
 </section>
 <!-- /.content-wrapper -->
-<footer class="main-footer" th:replace="backend/layout/main :: footer">
+<footer class="main-footer" th:replace="backend/layout :: footer">
 </footer>
 </div>
-<th:block th:replace="backend/layout/main :: common_js"/>
+<th:block th:replace="backend/layout :: common_js"/>
 <th:block th:inline="javascript">
     <!-- We support more than 40 localizations -->
     <script type="text/javascript" th:src="@{/common/jqGrid-master/js/i18n/grid.locale-cn.js}"></script>
@@ -264,92 +246,5 @@
         });
     </script>
 </th:block>
-
-<!-- Modal -->
-<div class="modal fade" id="withdrawModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog " role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title text-center"><span id="withdrawMemberCard"></span>提现</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" id="withdrawForm">
-                    <input type="hidden" name="userId" id="withdrawUserId"/>
-                    <input type="hidden" name="balance" id="balance"/>
-                    <div class="form-group">
-                        <label for="withdrawAmount" class="col-sm-2 control-label">提现金额</label>
-                        <div class="col-sm-10">
-                            <input type="number" class="form-control" name="amount" id="withdrawAmount"
-                                   placeholder="提现金额">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="paymentChannel" class="col-sm-2 control-label">付款渠道</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" name="paymentChannel" id="paymentChannel" placeholder="付款渠道">
-                                <option value="现金">现金</option>
-                                <option value="微信">微信</option>
-                                <option value="支付宝">支付宝</option>
-                            </select>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-confirm-withdraw">确定</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="rechargeModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog " role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title text-center"><span id="rechargeMemberCard"></span>充值</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" id="rechargeForm">
-                    <input type="hidden" name="userId" id="rechargeUserId"/>
-                    <div class="form-group">
-                        <label for="rechargeAmount" class="col-sm-2 control-label">充值金额</label>
-                        <div class="col-sm-10">
-                            <input type="number" class="form-control" name="amount" id="rechargeAmount"
-                                   placeholder="充值金额">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="withdrawPaymentChannel" class="col-sm-2 control-label">付款渠道</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" name="paymentChannel" id="withdrawPaymentChannel" placeholder="付款渠道">
-                                <option value="现金">现金</option>
-                                <option value="微信">微信</option>
-                                <option value="支付宝">支付宝</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="rechargeType" class="col-sm-2 control-label">充值类型</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" name="rechargeType" id="rechargeType" placeholder="充值类型">
-                                <option value="充值">充值</option>
-                                <option value="奖励">奖励</option>
-                            </select>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-confirm-recharge">确定</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-            </div>
-        </div>
-    </div>
-</div>
 </body>
 </html>

@@ -1,30 +1,68 @@
 package com.revengemission.customerservice.service.impl;
 
-import com.revengemission.customerservice.dao.entity.UserAccountEntity;
-import com.revengemission.customerservice.dao.repertory.UserAccountRepository;
 import com.revengemission.customerservice.domain.GlobalConstant;
 import com.revengemission.customerservice.domain.JsonObjects;
 import com.revengemission.customerservice.domain.ResponseResult;
 import com.revengemission.customerservice.domain.UserAccount;
+import com.revengemission.customerservice.persistence.entity.UserAccountEntity;
+import com.revengemission.customerservice.persistence.entity.UserAccountEntityExample;
+import com.revengemission.customerservice.persistence.mapper.UserAccountEntityMapper;
 import com.revengemission.customerservice.service.UserAccountService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
+
 
 @Service
 public class UserAccountServiceImpl extends BaseServiceImpl implements UserAccountService {
 
     @Autowired
-    UserAccountRepository userAccountRepository;
+    UserAccountEntityMapper userAccountEntityMapper;
 
     @Override
     public UserAccount login(String username, String password) {
-        UserAccountEntity userAccountEntity = userAccountRepository.findByUsername(username);
+
+        UserAccountEntityExample example = new UserAccountEntityExample();
+        example.createCriteria().andUsernameEqualTo(username);
+        List<UserAccountEntity> entityList = userAccountEntityMapper.selectByExample(example);
+        if (entityList != null && entityList.size() > 0) {
+            return dozerMapper.map(entityList.get(0), UserAccount.class);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public JsonObjects<UserAccount> listCommissioners(int pageNum, int pageSize, String sortField, String sortOrder) {
+        JsonObjects<UserAccount> jsonObjects = new JsonObjects<>();
+
+        UserAccountEntityExample example = new UserAccountEntityExample();
+        example.createCriteria().andRoleEqualTo(GlobalConstant.ROLE_COMMISSIONER);
+        example.setOrderByClause(sortOrder + " " + sortOrder);
+        List<UserAccountEntity> entityList = userAccountEntityMapper.selectByExample(example);
+        long total = userAccountEntityMapper.countByExample(example);
+        jsonObjects.setCurrentPage(pageNum);
+        jsonObjects.setTotal(total);
+        if (pageNum > 0 && pageSize > 0) {
+            jsonObjects.setTotalPage(total % pageSize == 0 ? total / pageSize : total / pageSize + 1);
+        }
+        if (entityList.size() > 0) {
+            jsonObjects.getObjectElements().addAll(mapperListObjects(entityList, UserAccount.class));
+        }
+        return jsonObjects;
+    }
+
+    @Override
+    public UserAccount create(UserAccount userAccount) {
+        UserAccountEntity userAccountEntity = dozerMapper.map(userAccount, UserAccountEntity.class);
+        userAccountEntityMapper.insert(userAccountEntity);
+        return dozerMapper.map(userAccountEntity, UserAccount.class);
+    }
+
+    @Override
+    public UserAccount retrieveById(long id) {
+        UserAccountEntity userAccountEntity = userAccountEntityMapper.selectByPrimaryKey(id);
         if (userAccountEntity != null) {
             return dozerMapper.map(userAccountEntity, UserAccount.class);
         } else {
@@ -33,59 +71,20 @@ public class UserAccountServiceImpl extends BaseServiceImpl implements UserAccou
     }
 
     @Override
-    public JsonObjects<UserAccount> list(int pageNum, int pageSize, String sortField, String sortOrder) {
-        JsonObjects<UserAccount> jsonObjects = new JsonObjects<>();
-        Sort sort = null;
-        if (StringUtils.equalsIgnoreCase("asc", sortOrder)) {
-            sort = new Sort(Sort.Direction.ASC, sortField);
-        } else {
-            sort = new Sort(Sort.Direction.DESC, sortField);
-        }
-        PageRequest pageRequest = PageRequest.of(pageNum - 1, pageSize, sort);
-        Page<UserAccountEntity> userAccountEntityPage = userAccountRepository.listByRole(GlobalConstant.ROLE_ADMIN, pageRequest);
-        jsonObjects.setCurrentPage(pageNum);
-        jsonObjects.setTotal(userAccountEntityPage.getTotalElements());
-        if (pageNum > 0 && pageSize > 0) {
-            jsonObjects.setTotalPage(userAccountEntityPage.getTotalPages());
-        }
-        if (userAccountEntityPage.getContent().size() > 0) {
-            jsonObjects.getObjectElements().addAll(mapperListObjects(userAccountEntityPage.getContent(), UserAccount.class));
-        }
-        return jsonObjects;
-    }
-
-    @Override
-    public UserAccount create(UserAccount userAccount) {
-        UserAccountEntity userAccountEntity = dozerMapper.map(userAccount, UserAccountEntity.class);
-        userAccountEntity = userAccountRepository.save(userAccountEntity);
-        return dozerMapper.map(userAccountEntity, UserAccount.class);
-    }
-
-    @Override
-    public UserAccount retrieveById(long id) {
-        Optional<UserAccountEntity> optional = userAccountRepository.findById(id);
-        if (optional.isPresent()) {
-            return dozerMapper.map(optional.get(), UserAccount.class);
-        } else {
-            return null;
-        }
-    }
-
-    @Override
     public ResponseResult updateById(UserAccount userAccount) {
-        Optional<UserAccountEntity> optional = userAccountRepository.findById(Long.parseLong(userAccount.getId()));
-        optional.ifPresent(e -> {
-            e.setRecordStatus(userAccount.getRecordStatus());
-            e.setUsername(userAccount.getUsername());
-            e.setPassword(userAccount.getPassword());
-            userAccountRepository.save(e);
-        });
+        UserAccountEntity userAccountEntity = userAccountEntityMapper.selectByPrimaryKey(Long.parseLong(userAccount.getId()));
+        if (userAccountEntity != null) {
+            userAccountEntity.setRecordStatus(userAccount.getRecordStatus());
+            userAccountEntity.setUsername(userAccount.getUsername());
+            userAccountEntity.setPassword(userAccount.getPassword());
+            userAccountEntityMapper.updateByPrimaryKey(userAccountEntity);
+        }
         return new ResponseResult();
     }
 
     @Override
     public ResponseResult deleteById(long id) {
-        userAccountRepository.deleteById(id);
+        userAccountEntityMapper.deleteByPrimaryKey(id);
         return new ResponseResult();
     }
 }

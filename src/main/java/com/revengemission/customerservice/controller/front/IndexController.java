@@ -57,6 +57,7 @@ public class IndexController {
         conversationMessage.setMessageType(message.getMessageType());
         conversationMessage.setMessageFrom(principal.getName());
         conversationMessage.setMessage(message.getMessage());
+        conversationMessage.setStatus(0);
         conversationMessageService.create(conversationMessage);
 
         messagingTemplate.convertAndSendToUser("" + principal.getRecipientId(),

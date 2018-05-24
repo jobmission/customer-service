@@ -20,7 +20,7 @@ import java.util.Collection;
 public class MyAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    UserAccountService userService;
+    UserAccountService userAccountService;
 
     @Autowired
     SessionData sessionData;
@@ -35,7 +35,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
-        UserAccount userAccount = userService.login(username, password);
+        UserAccount userAccount = userAccountService.login(username, password);
         if (userAccount == null) {
             throw new BadCredentialsException("Username not found.");
         }
