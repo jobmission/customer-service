@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>index</title>
     <link rel="stylesheet" href="../../static/assets/bootstrap/css/bootstrap.min.css"
           th:href="@{/assets/bootstrap/css/bootstrap.min.css}"/>
@@ -11,6 +13,14 @@
         .message-container {
             max-height: 280px;
             overflow: auto;
+        }
+
+        .conversation-container .list-group-item.active {
+            z-index: 2;
+            color: #fff;
+            background-color: #dddddd;
+            border-color: #ddddaa;
+            color: #ffffff;
         }
     </style>
 </head>
@@ -25,17 +35,18 @@
             <p class="small p-0 m-0 time text-right"></p>
         </li>
     </ul>
-    <div class="row mt-3 pt-3">
+    <h4>会话中</h4>
+    <div class="row">
         <div class="col-5">
             <ul class="list-group conversation-container">
                 <li class="list-group-item px-1 align-items-center">
                     <button class="btn btn-outline-danger btn-sm disconnect d-none" type="button">断开连接</button>
                 </li>
-                <li class="list-group-item px-1 align-items-center conversation-item conversation-item-template d-none">
+                <li class="list-group-item p-1 align-items-center conversation-item conversation-item-template d-none">
                     <span class="conversation-item-name">客户</span>
                     <span class="badge badge-primary badge-pill float-right">new</span>
                 </li>
-                <li class="list-group-item px-1 align-items-center conversation-item"
+                <li class="list-group-item p-1 align-items-center conversation-item"
                     th:each="conversation,iterStat :${conversationList}"
                     th:attr="data-id=${conversation.id},data-initiator-id=${conversation.initiatorId}"
                     th:classappend="${iterStat.first?'active':''}">
@@ -48,7 +59,7 @@
         <div class="col-7 pl-0 conversation-message-wrapper">
             <div class="card conversation-wrapper conversation-wrapper-template d-none">
                 <div class="card-header">
-                    <h5>会话中</h5>
+                    <h5 class="customer-name">会话中</h5>
                 </div>
                 <div class="card-body  p-1">
                     <form class="d-none message-form" onsubmit="return false;">
@@ -69,7 +80,7 @@
                  th:id="${conversation.id}"
                  th:classappend="${iterStat.first?'':'d-none'}">
                 <div class="card-header">
-                    <h5>会话中</h5>
+                    <h5 class="customer-name" th:text="${conversation.username}">会话中</h5>
                 </div>
                 <div class="card-body  p-1">
                     <form class="d-none message-form" onsubmit="return false;">
@@ -116,6 +127,20 @@
             $(".connect").addClass("d-none");
             $(".disconnect").removeClass("d-none");
             $(".message-form").removeClass("d-none");
+
+            stompClient.subscribe('/topic/announce', function (data) {
+                console.log("announce=" + data.body);
+                /*var $systemMessage = $(".system-message-template").clone().removeClass("d-none system-message-template");
+                 $systemMessage.find(".system-message").text(JSON.parse(data.body).message);
+                 var momentTime = moment(JSON.parse(data.body).date);
+                 $systemMessage.find(".time").text(momentTime.format("HH:mm:ss"));
+                 $systemMessage.appendTo($(".message-list"));
+
+                 $(".message-container").scrollTop($(".message-container")[0].scrollHeight);*/
+
+                /*会话维持*/
+            });
+
             // 订阅新消息
             stompClient.subscribe("/user/queue/message", function (data) {
                 console.log("message=" + data.body)
@@ -129,15 +154,13 @@
                 } else {
                     var $systemMessage = $(".conversation-item-template").clone().removeClass("d-none conversation-item-template");
                     $systemMessage.find(".conversation-item-name").text(JSON.parse(data.body).username);
-                    $systemMessage.data("id", "" + JSON.parse(data.body).id);
+                    $systemMessage.attr("data-id", "" + JSON.parse(data.body).id);
                     $systemMessage.data("initiator-id", "" + JSON.parse(data.body).initiatorId);
                     $systemMessage.appendTo($(".conversation-container"));
 
                     var $conversationWrapper = $(".conversation-wrapper-template").clone().removeClass("conversation-wrapper-template");
+                    $conversationWrapper.find(".customer-name").text(JSON.parse(data.body).username);
                     $conversationWrapper.attr("id", "" + JSON.parse(data.body).id);
-                    if ($(".conversation-item.active").length == 0) {
-                        $conversationWrapper.removeClass("d-none");
-                    }
                     $conversationWrapper.appendTo($(".conversation-message-wrapper"));
                 }
 
@@ -151,6 +174,9 @@
                 var momentTime = moment(JSON.parse(data.body).date);
                 $systemMessage.find(".time").text(momentTime.format("HH:mm:ss"));
                 $systemMessage.appendTo($("#" + JSON.parse(data.body).conversationId).find(".message-list"));
+
+
+                $("[data-id='"+JSON.parse(data.body).conversationId+"']").find(".badge").removeClass("d-none");
 
                 $(".message-container").scrollTop($(".message-container")[0].scrollHeight);
             });
@@ -223,7 +249,7 @@
         console.log("conversation id " + $(this).data("id"));
         $(".conversation-item").removeClass("active");
         $(this).addClass("active");
-        $(this).find(".badge").remove();
+        $(this).find(".badge").addClass("d-none");
         $(".conversation-wrapper").addClass("d-none");
         $("#" + $(this).data("id")).removeClass('d-none');
     });

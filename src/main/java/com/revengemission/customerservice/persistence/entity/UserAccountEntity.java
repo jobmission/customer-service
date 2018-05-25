@@ -6,25 +6,11 @@ import java.util.Date;
 public class UserAccountEntity implements Serializable {
     private Long id;
 
-    private Date dateCreated;
+    private String username;
 
-    private Date lastModified;
-
-    private Integer recordStatus;
-
-    private String remarks;
-
-    private Integer sortPriority;
-
-    private Integer version;
-
-    private String address;
+    private String password;
 
     private String avatarUrl;
-
-    private String city;
-
-    private Integer creditScore;
 
     private String email;
 
@@ -32,13 +18,19 @@ public class UserAccountEntity implements Serializable {
 
     private String nickName;
 
-    private String password;
-
-    private String province;
-
     private String role;
 
-    private String username;
+    private Date dateCreated;
+
+    private Date lastModified;
+
+    private int recordStatus;
+
+    private String remarks;
+
+    private int sortPriority;
+
+    private int version;
 
     private static final long serialVersionUID = 1L;
 
@@ -50,60 +42,20 @@ public class UserAccountEntity implements Serializable {
         this.id = id;
     }
 
-    public Date getDateCreated() {
-        return dateCreated;
+    public String getUsername() {
+        return username;
     }
 
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
     }
 
-    public Date getLastModified() {
-        return lastModified;
+    public String getPassword() {
+        return password;
     }
 
-    public void setLastModified(Date lastModified) {
-        this.lastModified = lastModified;
-    }
-
-    public Integer getRecordStatus() {
-        return recordStatus;
-    }
-
-    public void setRecordStatus(Integer recordStatus) {
-        this.recordStatus = recordStatus;
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks == null ? null : remarks.trim();
-    }
-
-    public Integer getSortPriority() {
-        return sortPriority;
-    }
-
-    public void setSortPriority(Integer sortPriority) {
-        this.sortPriority = sortPriority;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
     }
 
     public String getAvatarUrl() {
@@ -112,22 +64,6 @@ public class UserAccountEntity implements Serializable {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl == null ? null : avatarUrl.trim();
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city == null ? null : city.trim();
-    }
-
-    public Integer getCreditScore() {
-        return creditScore;
-    }
-
-    public void setCreditScore(Integer creditScore) {
-        this.creditScore = creditScore;
     }
 
     public String getEmail() {
@@ -154,22 +90,6 @@ public class UserAccountEntity implements Serializable {
         this.nickName = nickName == null ? null : nickName.trim();
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
-
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province == null ? null : province.trim();
-    }
-
     public String getRole() {
         return role;
     }
@@ -178,11 +98,51 @@ public class UserAccountEntity implements Serializable {
         this.role = role == null ? null : role.trim();
     }
 
-    public String getUsername() {
-        return username;
+    public Date getDateCreated() {
+        return dateCreated;
     }
 
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
+    }
+
+    public int getRecordStatus() {
+        return recordStatus;
+    }
+
+    public void setRecordStatus(int recordStatus) {
+        this.recordStatus = recordStatus;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks == null ? null : remarks.trim();
+    }
+
+    public int getSortPriority() {
+        return sortPriority;
+    }
+
+    public void setSortPriority(int sortPriority) {
+        this.sortPriority = sortPriority;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

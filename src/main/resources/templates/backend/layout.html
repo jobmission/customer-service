@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="common_header(title,links,style)">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title th:replace="${title}">The awesome application</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
-    <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}"/>
     <!-- Font Awesome -->
     <link rel="stylesheet" th:href="@{/assets/fontawesome-all.min.css}"/>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!-- jQuery 2.2.3 -->
     <script th:src="@{/assets/jquery-3.3.1.min.js}"></script>
     <script th:src="@{/common/global.constant.js}"></script>
     <th:block th:replace="${links}"/>
@@ -70,7 +66,7 @@
     </section>
     <!-- /.content-wrapper -->
     <footer class="main-footer" th:fragment="footer">
-        <strong>Copyright &copy; 2018 <a href="#">CMS</a>.</strong> All rights
+        <strong>Copyright &copy; 2018 <a href="#">Customer service</a>.</strong> All rights
         reserved.
     </footer>
 </div>
@@ -78,7 +74,6 @@
 
 <th:block th:fragment="common_js">
     <script th:src="@{/assets/bootstrap/js/bootstrap.min.js}"></script>
-    <!-- Morris.js charts -->
 </th:block>
 </body>
 </html>

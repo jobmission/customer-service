@@ -51,6 +51,11 @@
 
         <table tableName="%_entity">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="flag" javaType="boolean"/>
+            <columnOverride column="customer" javaType="boolean"/>
+            <columnOverride column="record_status" javaType="int"/>
+            <columnOverride column="sort_priority" javaType="int"/>
+            <columnOverride column="version" javaType="int"/>
         </table>
 
     </context>

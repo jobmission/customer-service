@@ -165,376 +165,6 @@ public class ConversationEntityExample {
             return (Criteria) this;
         }
 
-        public Criteria andDateCreatedIsNull() {
-            addCriterion("date_created is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateCreatedIsNotNull() {
-            addCriterion("date_created is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateCreatedEqualTo(Date value) {
-            addCriterion("date_created =", value, "dateCreated");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateCreatedNotEqualTo(Date value) {
-            addCriterion("date_created <>", value, "dateCreated");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateCreatedGreaterThan(Date value) {
-            addCriterion("date_created >", value, "dateCreated");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateCreatedGreaterThanOrEqualTo(Date value) {
-            addCriterion("date_created >=", value, "dateCreated");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateCreatedLessThan(Date value) {
-            addCriterion("date_created <", value, "dateCreated");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateCreatedLessThanOrEqualTo(Date value) {
-            addCriterion("date_created <=", value, "dateCreated");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateCreatedIn(List<Date> values) {
-            addCriterion("date_created in", values, "dateCreated");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateCreatedNotIn(List<Date> values) {
-            addCriterion("date_created not in", values, "dateCreated");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateCreatedBetween(Date value1, Date value2) {
-            addCriterion("date_created between", value1, value2, "dateCreated");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateCreatedNotBetween(Date value1, Date value2) {
-            addCriterion("date_created not between", value1, value2, "dateCreated");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastModifiedIsNull() {
-            addCriterion("last_modified is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastModifiedIsNotNull() {
-            addCriterion("last_modified is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastModifiedEqualTo(Date value) {
-            addCriterion("last_modified =", value, "lastModified");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastModifiedNotEqualTo(Date value) {
-            addCriterion("last_modified <>", value, "lastModified");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastModifiedGreaterThan(Date value) {
-            addCriterion("last_modified >", value, "lastModified");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastModifiedGreaterThanOrEqualTo(Date value) {
-            addCriterion("last_modified >=", value, "lastModified");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastModifiedLessThan(Date value) {
-            addCriterion("last_modified <", value, "lastModified");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastModifiedLessThanOrEqualTo(Date value) {
-            addCriterion("last_modified <=", value, "lastModified");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastModifiedIn(List<Date> values) {
-            addCriterion("last_modified in", values, "lastModified");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastModifiedNotIn(List<Date> values) {
-            addCriterion("last_modified not in", values, "lastModified");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastModifiedBetween(Date value1, Date value2) {
-            addCriterion("last_modified between", value1, value2, "lastModified");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastModifiedNotBetween(Date value1, Date value2) {
-            addCriterion("last_modified not between", value1, value2, "lastModified");
-            return (Criteria) this;
-        }
-
-        public Criteria andRecordStatusIsNull() {
-            addCriterion("record_status is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andRecordStatusIsNotNull() {
-            addCriterion("record_status is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andRecordStatusEqualTo(Integer value) {
-            addCriterion("record_status =", value, "recordStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andRecordStatusNotEqualTo(Integer value) {
-            addCriterion("record_status <>", value, "recordStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andRecordStatusGreaterThan(Integer value) {
-            addCriterion("record_status >", value, "recordStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andRecordStatusGreaterThanOrEqualTo(Integer value) {
-            addCriterion("record_status >=", value, "recordStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andRecordStatusLessThan(Integer value) {
-            addCriterion("record_status <", value, "recordStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andRecordStatusLessThanOrEqualTo(Integer value) {
-            addCriterion("record_status <=", value, "recordStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andRecordStatusIn(List<Integer> values) {
-            addCriterion("record_status in", values, "recordStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andRecordStatusNotIn(List<Integer> values) {
-            addCriterion("record_status not in", values, "recordStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andRecordStatusBetween(Integer value1, Integer value2) {
-            addCriterion("record_status between", value1, value2, "recordStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andRecordStatusNotBetween(Integer value1, Integer value2) {
-            addCriterion("record_status not between", value1, value2, "recordStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarksIsNull() {
-            addCriterion("remarks is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarksIsNotNull() {
-            addCriterion("remarks is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarksEqualTo(String value) {
-            addCriterion("remarks =", value, "remarks");
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarksNotEqualTo(String value) {
-            addCriterion("remarks <>", value, "remarks");
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarksGreaterThan(String value) {
-            addCriterion("remarks >", value, "remarks");
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarksGreaterThanOrEqualTo(String value) {
-            addCriterion("remarks >=", value, "remarks");
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarksLessThan(String value) {
-            addCriterion("remarks <", value, "remarks");
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarksLessThanOrEqualTo(String value) {
-            addCriterion("remarks <=", value, "remarks");
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarksLike(String value) {
-            addCriterion("remarks like", value, "remarks");
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarksNotLike(String value) {
-            addCriterion("remarks not like", value, "remarks");
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarksIn(List<String> values) {
-            addCriterion("remarks in", values, "remarks");
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarksNotIn(List<String> values) {
-            addCriterion("remarks not in", values, "remarks");
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarksBetween(String value1, String value2) {
-            addCriterion("remarks between", value1, value2, "remarks");
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarksNotBetween(String value1, String value2) {
-            addCriterion("remarks not between", value1, value2, "remarks");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortPriorityIsNull() {
-            addCriterion("sort_priority is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortPriorityIsNotNull() {
-            addCriterion("sort_priority is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortPriorityEqualTo(Integer value) {
-            addCriterion("sort_priority =", value, "sortPriority");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortPriorityNotEqualTo(Integer value) {
-            addCriterion("sort_priority <>", value, "sortPriority");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortPriorityGreaterThan(Integer value) {
-            addCriterion("sort_priority >", value, "sortPriority");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortPriorityGreaterThanOrEqualTo(Integer value) {
-            addCriterion("sort_priority >=", value, "sortPriority");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortPriorityLessThan(Integer value) {
-            addCriterion("sort_priority <", value, "sortPriority");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortPriorityLessThanOrEqualTo(Integer value) {
-            addCriterion("sort_priority <=", value, "sortPriority");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortPriorityIn(List<Integer> values) {
-            addCriterion("sort_priority in", values, "sortPriority");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortPriorityNotIn(List<Integer> values) {
-            addCriterion("sort_priority not in", values, "sortPriority");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortPriorityBetween(Integer value1, Integer value2) {
-            addCriterion("sort_priority between", value1, value2, "sortPriority");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortPriorityNotBetween(Integer value1, Integer value2) {
-            addCriterion("sort_priority not between", value1, value2, "sortPriority");
-            return (Criteria) this;
-        }
-
-        public Criteria andVersionIsNull() {
-            addCriterion("version is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andVersionIsNotNull() {
-            addCriterion("version is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andVersionEqualTo(Integer value) {
-            addCriterion("version =", value, "version");
-            return (Criteria) this;
-        }
-
-        public Criteria andVersionNotEqualTo(Integer value) {
-            addCriterion("version <>", value, "version");
-            return (Criteria) this;
-        }
-
-        public Criteria andVersionGreaterThan(Integer value) {
-            addCriterion("version >", value, "version");
-            return (Criteria) this;
-        }
-
-        public Criteria andVersionGreaterThanOrEqualTo(Integer value) {
-            addCriterion("version >=", value, "version");
-            return (Criteria) this;
-        }
-
-        public Criteria andVersionLessThan(Integer value) {
-            addCriterion("version <", value, "version");
-            return (Criteria) this;
-        }
-
-        public Criteria andVersionLessThanOrEqualTo(Integer value) {
-            addCriterion("version <=", value, "version");
-            return (Criteria) this;
-        }
-
-        public Criteria andVersionIn(List<Integer> values) {
-            addCriterion("version in", values, "version");
-            return (Criteria) this;
-        }
-
-        public Criteria andVersionNotIn(List<Integer> values) {
-            addCriterion("version not in", values, "version");
-            return (Criteria) this;
-        }
-
-        public Criteria andVersionBetween(Integer value1, Integer value2) {
-            addCriterion("version between", value1, value2, "version");
-            return (Criteria) this;
-        }
-
-        public Criteria andVersionNotBetween(Integer value1, Integer value2) {
-            addCriterion("version not between", value1, value2, "version");
-            return (Criteria) this;
-        }
-
         public Criteria andBrowserIsNull() {
             addCriterion("browser is null");
             return (Criteria) this;
@@ -992,6 +622,376 @@ public class ConversationEntityExample {
 
         public Criteria andUsernameNotBetween(String value1, String value2) {
             addCriterion("username not between", value1, value2, "username");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedIsNull() {
+            addCriterion("date_created is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedIsNotNull() {
+            addCriterion("date_created is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedEqualTo(Date value) {
+            addCriterion("date_created =", value, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedNotEqualTo(Date value) {
+            addCriterion("date_created <>", value, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedGreaterThan(Date value) {
+            addCriterion("date_created >", value, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedGreaterThanOrEqualTo(Date value) {
+            addCriterion("date_created >=", value, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedLessThan(Date value) {
+            addCriterion("date_created <", value, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedLessThanOrEqualTo(Date value) {
+            addCriterion("date_created <=", value, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedIn(List<Date> values) {
+            addCriterion("date_created in", values, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedNotIn(List<Date> values) {
+            addCriterion("date_created not in", values, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedBetween(Date value1, Date value2) {
+            addCriterion("date_created between", value1, value2, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedNotBetween(Date value1, Date value2) {
+            addCriterion("date_created not between", value1, value2, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastModifiedIsNull() {
+            addCriterion("last_modified is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastModifiedIsNotNull() {
+            addCriterion("last_modified is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastModifiedEqualTo(Date value) {
+            addCriterion("last_modified =", value, "lastModified");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastModifiedNotEqualTo(Date value) {
+            addCriterion("last_modified <>", value, "lastModified");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastModifiedGreaterThan(Date value) {
+            addCriterion("last_modified >", value, "lastModified");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastModifiedGreaterThanOrEqualTo(Date value) {
+            addCriterion("last_modified >=", value, "lastModified");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastModifiedLessThan(Date value) {
+            addCriterion("last_modified <", value, "lastModified");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastModifiedLessThanOrEqualTo(Date value) {
+            addCriterion("last_modified <=", value, "lastModified");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastModifiedIn(List<Date> values) {
+            addCriterion("last_modified in", values, "lastModified");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastModifiedNotIn(List<Date> values) {
+            addCriterion("last_modified not in", values, "lastModified");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastModifiedBetween(Date value1, Date value2) {
+            addCriterion("last_modified between", value1, value2, "lastModified");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastModifiedNotBetween(Date value1, Date value2) {
+            addCriterion("last_modified not between", value1, value2, "lastModified");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordStatusIsNull() {
+            addCriterion("record_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordStatusIsNotNull() {
+            addCriterion("record_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordStatusEqualTo(int value) {
+            addCriterion("record_status =", value, "recordStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordStatusNotEqualTo(int value) {
+            addCriterion("record_status <>", value, "recordStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordStatusGreaterThan(int value) {
+            addCriterion("record_status >", value, "recordStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordStatusGreaterThanOrEqualTo(int value) {
+            addCriterion("record_status >=", value, "recordStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordStatusLessThan(int value) {
+            addCriterion("record_status <", value, "recordStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordStatusLessThanOrEqualTo(int value) {
+            addCriterion("record_status <=", value, "recordStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordStatusIn(List<Integer> values) {
+            addCriterion("record_status in", values, "recordStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordStatusNotIn(List<Integer> values) {
+            addCriterion("record_status not in", values, "recordStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordStatusBetween(int value1, int value2) {
+            addCriterion("record_status between", value1, value2, "recordStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordStatusNotBetween(int value1, int value2) {
+            addCriterion("record_status not between", value1, value2, "recordStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarksIsNull() {
+            addCriterion("remarks is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarksIsNotNull() {
+            addCriterion("remarks is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarksEqualTo(String value) {
+            addCriterion("remarks =", value, "remarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarksNotEqualTo(String value) {
+            addCriterion("remarks <>", value, "remarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarksGreaterThan(String value) {
+            addCriterion("remarks >", value, "remarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarksGreaterThanOrEqualTo(String value) {
+            addCriterion("remarks >=", value, "remarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarksLessThan(String value) {
+            addCriterion("remarks <", value, "remarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarksLessThanOrEqualTo(String value) {
+            addCriterion("remarks <=", value, "remarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarksLike(String value) {
+            addCriterion("remarks like", value, "remarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarksNotLike(String value) {
+            addCriterion("remarks not like", value, "remarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarksIn(List<String> values) {
+            addCriterion("remarks in", values, "remarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarksNotIn(List<String> values) {
+            addCriterion("remarks not in", values, "remarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarksBetween(String value1, String value2) {
+            addCriterion("remarks between", value1, value2, "remarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarksNotBetween(String value1, String value2) {
+            addCriterion("remarks not between", value1, value2, "remarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortPriorityIsNull() {
+            addCriterion("sort_priority is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortPriorityIsNotNull() {
+            addCriterion("sort_priority is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortPriorityEqualTo(int value) {
+            addCriterion("sort_priority =", value, "sortPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortPriorityNotEqualTo(int value) {
+            addCriterion("sort_priority <>", value, "sortPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortPriorityGreaterThan(int value) {
+            addCriterion("sort_priority >", value, "sortPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortPriorityGreaterThanOrEqualTo(int value) {
+            addCriterion("sort_priority >=", value, "sortPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortPriorityLessThan(int value) {
+            addCriterion("sort_priority <", value, "sortPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortPriorityLessThanOrEqualTo(int value) {
+            addCriterion("sort_priority <=", value, "sortPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortPriorityIn(List<Integer> values) {
+            addCriterion("sort_priority in", values, "sortPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortPriorityNotIn(List<Integer> values) {
+            addCriterion("sort_priority not in", values, "sortPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortPriorityBetween(int value1, int value2) {
+            addCriterion("sort_priority between", value1, value2, "sortPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortPriorityNotBetween(int value1, int value2) {
+            addCriterion("sort_priority not between", value1, value2, "sortPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionIsNull() {
+            addCriterion("version is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionIsNotNull() {
+            addCriterion("version is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionEqualTo(int value) {
+            addCriterion("version =", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionNotEqualTo(int value) {
+            addCriterion("version <>", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionGreaterThan(int value) {
+            addCriterion("version >", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionGreaterThanOrEqualTo(int value) {
+            addCriterion("version >=", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionLessThan(int value) {
+            addCriterion("version <", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionLessThanOrEqualTo(int value) {
+            addCriterion("version <=", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionIn(List<Integer> values) {
+            addCriterion("version in", values, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionNotIn(List<Integer> values) {
+            addCriterion("version not in", values, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionBetween(int value1, int value2) {
+            addCriterion("version between", value1, value2, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionNotBetween(int value1, int value2) {
+            addCriterion("version not between", value1, value2, "version");
             return (Criteria) this;
         }
     }

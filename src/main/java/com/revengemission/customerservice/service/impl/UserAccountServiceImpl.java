@@ -21,7 +21,7 @@ public class UserAccountServiceImpl extends BaseServiceImpl implements UserAccou
     UserAccountEntityMapper userAccountEntityMapper;
 
     @Override
-    public UserAccount login(String username, String password) {
+    public UserAccount findByUsername(String username) {
 
         UserAccountEntityExample example = new UserAccountEntityExample();
         example.createCriteria().andUsernameEqualTo(username);

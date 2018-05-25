@@ -3,12 +3,6 @@
 <mapper namespace="com.revengemission.customerservice.persistence.mapper.ConversationEntityMapper">
   <resultMap id="BaseResultMap" type="com.revengemission.customerservice.persistence.entity.ConversationEntity">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="date_created" jdbcType="TIMESTAMP" property="dateCreated" />
-    <result column="last_modified" jdbcType="TIMESTAMP" property="lastModified" />
-    <result column="record_status" jdbcType="INTEGER" property="recordStatus" />
-    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
-    <result column="sort_priority" jdbcType="INTEGER" property="sortPriority" />
-    <result column="version" jdbcType="INTEGER" property="version" />
     <result column="browser" jdbcType="VARCHAR" property="browser" />
     <result column="initiator_id" jdbcType="BIGINT" property="initiatorId" />
     <result column="ip" jdbcType="VARCHAR" property="ip" />
@@ -16,6 +10,12 @@
     <result column="recipient_id" jdbcType="BIGINT" property="recipientId" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="date_created" jdbcType="TIMESTAMP" property="dateCreated" />
+    <result column="last_modified" jdbcType="TIMESTAMP" property="lastModified" />
+    <result column="record_status" jdbcType="INTEGER" property="recordStatus" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="sort_priority" jdbcType="INTEGER" property="sortPriority" />
+    <result column="version" jdbcType="INTEGER" property="version" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -76,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, date_created, last_modified, record_status, remarks, sort_priority, version, 
-    browser, initiator_id, ip, os, recipient_id, status, username
+    id, browser, initiator_id, ip, os, recipient_id, status, username, date_created, 
+    last_modified, record_status, remarks, sort_priority, version
   </sql>
   <select id="selectByExample" parameterType="com.revengemission.customerservice.persistence.entity.ConversationEntityExample" resultMap="BaseResultMap">
     select
@@ -113,16 +113,16 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into conversation_entity (date_created, last_modified, record_status, 
-      remarks, sort_priority, version, 
-      browser, initiator_id, ip, 
+    insert into conversation_entity (browser, initiator_id, ip, 
       os, recipient_id, status, 
-      username)
-    values (#{dateCreated,jdbcType=TIMESTAMP}, #{lastModified,jdbcType=TIMESTAMP}, #{recordStatus,jdbcType=INTEGER}, 
-      #{remarks,jdbcType=VARCHAR}, #{sortPriority,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, 
-      #{browser,jdbcType=VARCHAR}, #{initiatorId,jdbcType=BIGINT}, #{ip,jdbcType=VARCHAR}, 
+      username, date_created, last_modified, 
+      record_status, remarks, sort_priority, 
+      version)
+    values (#{browser,jdbcType=VARCHAR}, #{initiatorId,jdbcType=BIGINT}, #{ip,jdbcType=VARCHAR}, 
       #{os,jdbcType=VARCHAR}, #{recipientId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
-      #{username,jdbcType=VARCHAR})
+      #{username,jdbcType=VARCHAR}, #{dateCreated,jdbcType=TIMESTAMP}, #{lastModified,jdbcType=TIMESTAMP}, 
+      #{recordStatus,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, #{sortPriority,jdbcType=INTEGER}, 
+      #{version,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.revengemission.customerservice.persistence.entity.ConversationEntity">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -130,24 +130,6 @@
     </selectKey>
     insert into conversation_entity
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="dateCreated != null">
-        date_created,
-      </if>
-      <if test="lastModified != null">
-        last_modified,
-      </if>
-      <if test="recordStatus != null">
-        record_status,
-      </if>
-      <if test="remarks != null">
-        remarks,
-      </if>
-      <if test="sortPriority != null">
-        sort_priority,
-      </if>
-      <if test="version != null">
-        version,
-      </if>
       <if test="browser != null">
         browser,
       </if>
@@ -169,26 +151,20 @@
       <if test="username != null">
         username,
       </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="dateCreated != null">
-        #{dateCreated,jdbcType=TIMESTAMP},
+        date_created,
       </if>
       <if test="lastModified != null">
-        #{lastModified,jdbcType=TIMESTAMP},
+        last_modified,
       </if>
-      <if test="recordStatus != null">
-        #{recordStatus,jdbcType=INTEGER},
-      </if>
+      record_status,
       <if test="remarks != null">
-        #{remarks,jdbcType=VARCHAR},
+        remarks,
       </if>
-      <if test="sortPriority != null">
-        #{sortPriority,jdbcType=INTEGER},
-      </if>
-      <if test="version != null">
-        #{version,jdbcType=INTEGER},
-      </if>
+      sort_priority,
+      version,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="browser != null">
         #{browser,jdbcType=VARCHAR},
       </if>
@@ -210,6 +186,18 @@
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
       </if>
+      <if test="dateCreated != null">
+        #{dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModified != null">
+        #{lastModified,jdbcType=TIMESTAMP},
+      </if>
+      #{recordStatus,jdbcType=INTEGER},
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      #{sortPriority,jdbcType=INTEGER},
+      #{version,jdbcType=INTEGER},
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.revengemission.customerservice.persistence.entity.ConversationEntityExample" resultType="java.lang.Long">
@@ -223,24 +211,6 @@
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
-      </if>
-      <if test="record.dateCreated != null">
-        date_created = #{record.dateCreated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.lastModified != null">
-        last_modified = #{record.lastModified,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.recordStatus != null">
-        record_status = #{record.recordStatus,jdbcType=INTEGER},
-      </if>
-      <if test="record.remarks != null">
-        remarks = #{record.remarks,jdbcType=VARCHAR},
-      </if>
-      <if test="record.sortPriority != null">
-        sort_priority = #{record.sortPriority,jdbcType=INTEGER},
-      </if>
-      <if test="record.version != null">
-        version = #{record.version,jdbcType=INTEGER},
       </if>
       <if test="record.browser != null">
         browser = #{record.browser,jdbcType=VARCHAR},
@@ -263,6 +233,24 @@
       <if test="record.username != null">
         username = #{record.username,jdbcType=VARCHAR},
       </if>
+      <if test="record.dateCreated != null">
+        date_created = #{record.dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastModified != null">
+        last_modified = #{record.lastModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.recordStatus != null">
+        record_status = #{record.recordStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.remarks != null">
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sortPriority != null">
+        sort_priority = #{record.sortPriority,jdbcType=INTEGER},
+      </if>
+      <if test="record.version != null">
+        version = #{record.version,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -271,19 +259,19 @@
   <update id="updateByExample" parameterType="map">
     update conversation_entity
     set id = #{record.id,jdbcType=BIGINT},
-      date_created = #{record.dateCreated,jdbcType=TIMESTAMP},
-      last_modified = #{record.lastModified,jdbcType=TIMESTAMP},
-      record_status = #{record.recordStatus,jdbcType=INTEGER},
-      remarks = #{record.remarks,jdbcType=VARCHAR},
-      sort_priority = #{record.sortPriority,jdbcType=INTEGER},
-      version = #{record.version,jdbcType=INTEGER},
       browser = #{record.browser,jdbcType=VARCHAR},
       initiator_id = #{record.initiatorId,jdbcType=BIGINT},
       ip = #{record.ip,jdbcType=VARCHAR},
       os = #{record.os,jdbcType=VARCHAR},
       recipient_id = #{record.recipientId,jdbcType=BIGINT},
       status = #{record.status,jdbcType=INTEGER},
-      username = #{record.username,jdbcType=VARCHAR}
+      username = #{record.username,jdbcType=VARCHAR},
+      date_created = #{record.dateCreated,jdbcType=TIMESTAMP},
+      last_modified = #{record.lastModified,jdbcType=TIMESTAMP},
+      record_status = #{record.recordStatus,jdbcType=INTEGER},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      sort_priority = #{record.sortPriority,jdbcType=INTEGER},
+      version = #{record.version,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -291,24 +279,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.revengemission.customerservice.persistence.entity.ConversationEntity">
     update conversation_entity
     <set>
-      <if test="dateCreated != null">
-        date_created = #{dateCreated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastModified != null">
-        last_modified = #{lastModified,jdbcType=TIMESTAMP},
-      </if>
-      <if test="recordStatus != null">
-        record_status = #{recordStatus,jdbcType=INTEGER},
-      </if>
-      <if test="remarks != null">
-        remarks = #{remarks,jdbcType=VARCHAR},
-      </if>
-      <if test="sortPriority != null">
-        sort_priority = #{sortPriority,jdbcType=INTEGER},
-      </if>
-      <if test="version != null">
-        version = #{version,jdbcType=INTEGER},
-      </if>
       <if test="browser != null">
         browser = #{browser,jdbcType=VARCHAR},
       </if>
@@ -330,24 +300,42 @@
       <if test="username != null">
         username = #{username,jdbcType=VARCHAR},
       </if>
+      <if test="dateCreated != null">
+        date_created = #{dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModified != null">
+        last_modified = #{lastModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recordStatus != null">
+        record_status = #{recordStatus,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="sortPriority != null">
+        sort_priority = #{sortPriority,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.revengemission.customerservice.persistence.entity.ConversationEntity">
     update conversation_entity
-    set date_created = #{dateCreated,jdbcType=TIMESTAMP},
-      last_modified = #{lastModified,jdbcType=TIMESTAMP},
-      record_status = #{recordStatus,jdbcType=INTEGER},
-      remarks = #{remarks,jdbcType=VARCHAR},
-      sort_priority = #{sortPriority,jdbcType=INTEGER},
-      version = #{version,jdbcType=INTEGER},
-      browser = #{browser,jdbcType=VARCHAR},
+    set browser = #{browser,jdbcType=VARCHAR},
       initiator_id = #{initiatorId,jdbcType=BIGINT},
       ip = #{ip,jdbcType=VARCHAR},
       os = #{os,jdbcType=VARCHAR},
       recipient_id = #{recipientId,jdbcType=BIGINT},
       status = #{status,jdbcType=INTEGER},
-      username = #{username,jdbcType=VARCHAR}
+      username = #{username,jdbcType=VARCHAR},
+      date_created = #{dateCreated,jdbcType=TIMESTAMP},
+      last_modified = #{lastModified,jdbcType=TIMESTAMP},
+      record_status = #{recordStatus,jdbcType=INTEGER},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      sort_priority = #{sortPriority,jdbcType=INTEGER},
+      version = #{version,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <cache flushInterval="20000" />

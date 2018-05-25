@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>index</title>
     <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css"
           th:href="@{/assets/bootstrap/css/bootstrap.min.css}"/>
@@ -12,6 +14,47 @@
             max-height: 280px;
             overflow: auto;
         }
+
+        .triangle-left {
+            position: relative;
+            color: #ffffff;
+            background: #cccccc;
+            min-width: 25%;
+            width:fit-content;
+            width:-moz-fit-content;
+        }
+
+        .triangle-left:before {
+            left: -12px;
+            border-width: 0 12px 12px 0;
+            width: 0;
+            position: absolute;
+            top: 7px;
+            border-style: solid;
+            border-color: transparent #cccccc;
+            content: "";
+        }
+
+        .triangle-right {
+            position: relative;
+            color: #ffffff;
+            background: #90bcec;
+            min-width: 25%;
+            width:fit-content;
+            width:-moz-fit-content;
+        }
+
+        .triangle-right:after {
+            right: -12px;
+            border-width: 0 0 12px 12px;
+            width: 0;
+            position: absolute;
+            top: 7px;
+            border-style: solid;
+            border-color: transparent #90bcec;
+            content: "";
+        }
+
     </style>
 </head>
 <body>
@@ -28,7 +71,7 @@
                     </button>
                 </div>
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary disconnect d-none" type="button">断开连接</button>
+                    <button class="btn btn-outline-danger disconnect d-none" type="button">断开连接</button>
                 </div>
             </div>
         </div>
@@ -36,16 +79,19 @@
             <form class="d-none message-form" onsubmit="return false;">
                 <div class="message-container">
                     <ul class="list-group list-group-flush message-list">
-                        <li class="list-group-item px-0 py-1 customer-message-template d-none">提问</li>
-                        <li class="list-group-item px-0 py-1 text-right system-message-template d-none">
-                            <span class="system-message pr-1">回答</span><span
-                                class="badge badge-primary badge-pill">系统</span>
-                            <p class="small p-0 m-0 time text-right"></p>
+                        <li class="list-group-item px-3 py-1 customer-message-template d-none">
+                            <div class="customer-message triangle-left py-2 px-1">提问</div>
+                        </li>
+                        <li class="list-group-item px-3 py-1 text-right system-message-template d-none">
+                            <p>
+                                <span class="badge badge-light badge-pill author">系统</span><span class="small p-0 m-0 time text-right"></span>
+                            </p>
+                            <div class="system-message triangle-right py-2 px-1" style="float: right">回答</div>
                         </li>
                     </ul>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <input type="text" class="form-control" id="message" placeholder="内容"/>
                 </div>
                 <input type="button" class="btn btn-primary btn-sm send" value="发送"/>
@@ -85,14 +131,6 @@
             // 订阅
             stompClient.subscribe('/topic/announce', function (data) {
                 console.log("announce=" + data.body);
-                /*var $systemMessage = $(".system-message-template").clone().removeClass("d-none system-message-template");
-                $systemMessage.find(".system-message").text(JSON.parse(data.body).message);
-                 var momentTime = moment(JSON.parse(data.body).date);
-                $systemMessage.find(".time").text(momentTime.format("HH:mm:ss"));
-                $systemMessage.appendTo($(".message-list"));
-
-                $(".message-container").scrollTop($(".message-container")[0].scrollHeight);*/
-
                 /*会话维持*/
                 $.ajax({
                     type: 'POST',
@@ -107,9 +145,10 @@
                 console.log("message=" + data.body);
 
                 var $systemMessage = $(".system-message-template").clone().removeClass("d-none system-message-template");
-                $systemMessage.find(".system-message").text(JSON.parse(data.body).message);
+                $systemMessage.find(".system-message").html(JSON.parse(data.body).message);
                 var momentTime = moment(JSON.parse(data.body).date);
                 $systemMessage.find(".time").text(momentTime.format("HH:mm:ss"));
+                $systemMessage.find(".author").text(JSON.parse(data.body).author);
                 $systemMessage.appendTo($(".message-list"));
 
                 $(".message-container").scrollTop($(".message-container")[0].scrollHeight);
@@ -170,7 +209,9 @@
         stompClient.send("/app/send", {}, JSON.stringify({
             'message': message
         }));
-        $(".customer-message-template").clone().removeClass("d-none customer-message-template").text(message).appendTo($(".message-list"));
+        var $customerMessage = $(".customer-message-template").clone().removeClass("d-none customer-message-template");
+        $customerMessage.find(".customer-message").html(message);
+        $customerMessage.appendTo($(".message-list"));
         $("#message").val("");
 
         $(".message-container").scrollTop($(".message-container")[0].scrollHeight);

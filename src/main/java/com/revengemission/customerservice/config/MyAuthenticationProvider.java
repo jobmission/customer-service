@@ -35,7 +35,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
-        UserAccount userAccount = userAccountService.login(username, password);
+        UserAccount userAccount = userAccountService.findByUsername(username);
         if (userAccount == null) {
             throw new BadCredentialsException("Username not found.");
         }
@@ -53,6 +53,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
         Collection<? extends GrantedAuthority> authorities = getAuthorities(userAccount);
         //Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
         ConversationPrincipal conversationPrincipal = new ConversationPrincipal(userAccount.getId(), password, authorities);
+        conversationPrincipal.setNickName(userAccount.getNickName());
         return conversationPrincipal;
     }
 

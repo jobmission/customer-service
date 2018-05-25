@@ -49,15 +49,13 @@ public class IndexController {
     @MessageMapping("/send")
     public void send(ConversationMessage message, ConversationPrincipal principal) throws Exception {
         message.setDate(new Date());
-        message.setMessageType(MessageType.QUEUE.name());
         message.setConversationId(principal.getConversationId());
 
         ConversationMessage conversationMessage = new ConversationMessage();
         conversationMessage.setConversationId(principal.getConversationId());
-        conversationMessage.setMessageType(message.getMessageType());
-        conversationMessage.setMessageFrom(principal.getName());
+        conversationMessage.setCustomer(true);
         conversationMessage.setMessage(message.getMessage());
-        conversationMessage.setStatus(0);
+        conversationMessage.setRecordStatus(0);
         conversationMessageService.create(conversationMessage);
 
         messagingTemplate.convertAndSendToUser("" + principal.getRecipientId(),
@@ -101,7 +99,6 @@ public class IndexController {
     public void announce() throws Exception {
         // 发现消息
         ConversationMessage message = new ConversationMessage();
-        message.setMessageType(MessageType.TOPIC.name());
         message.setDate(new Date());
         message.setMessage("会话维持");
         messagingTemplate.convertAndSend("/topic/announce", message);

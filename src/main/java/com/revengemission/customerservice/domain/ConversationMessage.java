@@ -7,13 +7,10 @@ import java.util.Date;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class ConversationMessage {
+public class ConversationMessage extends BaseDomain {
     private Long conversationId;
     private String message;
-    private String messageType;
-    private String messageFrom;
-    private String messageTo;
-    private String username;
+    private String author;
+    private boolean customer;
     private Date date;
-    private Integer status;
 }

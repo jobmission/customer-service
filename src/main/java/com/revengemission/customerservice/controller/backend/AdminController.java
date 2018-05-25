@@ -4,7 +4,6 @@ import com.revengemission.customerservice.config.ConversationPrincipal;
 import com.revengemission.customerservice.controller.BaseController;
 import com.revengemission.customerservice.domain.Conversation;
 import com.revengemission.customerservice.domain.ConversationMessage;
-import com.revengemission.customerservice.domain.MessageType;
 import com.revengemission.customerservice.service.ConversationMessageService;
 import com.revengemission.customerservice.service.ConversationService;
 import org.slf4j.Logger;
@@ -50,14 +49,15 @@ public class AdminController extends BaseController {
     public void reply(ConversationMessage message, ConversationPrincipal principal) throws Exception {
         ConversationMessage conversationMessage = new ConversationMessage();
         conversationMessage.setConversationId(message.getConversationId());
-        conversationMessage.setMessageType(MessageType.QUEUE.name());
-        conversationMessage.setMessageFrom(principal.getName());
-        conversationMessage.setMessageTo(message.getMessageTo());
+        conversationMessage.setCustomer(false);
+        conversationMessage.setAuthor(principal.getNickName());
         conversationMessage.setMessage(message.getMessage());
-        conversationMessage.setStatus(0);
+        conversationMessage.setRecordStatus(0);
         conversationMessageService.create(conversationMessage);
+        Conversation conversation = conversationService.retrieveById(message.getConversationId());
         message.setDate(new Date());
-        messagingTemplate.convertAndSendToUser(message.getMessageTo(),
+        message.setAuthor(principal.getNickName());
+        messagingTemplate.convertAndSendToUser(conversation.getInitiatorId(),
                 "/queue/talk", message);
     }
 
