@@ -47,7 +47,7 @@ CREATE TABLE conversation_message_entity
   COMMENT '会话id',
   message         VARCHAR(255),
   author          VARCHAR(255),
-  customer            TINYINT(1)             NOT NULL              DEFAULT 0,
+  customer        TINYINT(1)             NOT NULL              DEFAULT 0,
   date_created    DATETIME,
   last_modified   DATETIME,
   record_status   INT(11)                NOT NULL              DEFAULT '0',
@@ -56,3 +56,39 @@ CREATE TABLE conversation_message_entity
   COMMENT '优先级',
   version         INT(11)                                      DEFAULT '0'
 );
+
+CREATE TABLE discussion_topic_entity
+(
+  id            BIGINT(20) PRIMARY KEY NOT NULL              AUTO_INCREMENT,
+  topic         VARCHAR(20)            not null              default '',
+  date_created  DATETIME,
+  last_modified DATETIME,
+  record_status INT(11)                NOT NULL              DEFAULT '0',
+  remarks       VARCHAR(255),
+  sort_priority INT(11)                                      DEFAULT '0'
+  COMMENT '优先级',
+  version       INT(11)                                      DEFAULT '0',
+  CONSTRAINT unique_topic UNIQUE (topic)
+);
+
+CREATE TABLE discussion_entity
+(
+  id            BIGINT(20) PRIMARY KEY NOT NULL              AUTO_INCREMENT,
+  user_id       BIGINT(20)             NOT NULL
+  COMMENT '发帖者id',
+  topic_id      BIGINT(20)             NOT NULL
+  COMMENT '主题id',
+  author        VARCHAR(20),
+  title         VARCHAR(40),
+  content       VARCHAR(1000),
+  tags           json comment '标签',
+  date_created  DATETIME,
+  last_modified DATETIME,
+  record_status INT(11)                NOT NULL              DEFAULT '0',
+  remarks       VARCHAR(255),
+  sort_priority INT(11)                                      DEFAULT '0'
+  COMMENT '优先级',
+  version       INT(11)                                      DEFAULT '0',
+  FOREIGN KEY (topic_id) REFERENCES discussion_topic_entity (id)
+);
+
