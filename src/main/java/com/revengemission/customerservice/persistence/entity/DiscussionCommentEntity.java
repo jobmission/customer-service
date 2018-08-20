@@ -3,24 +3,16 @@ package com.revengemission.customerservice.persistence.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class DiscussionEntity implements Serializable {
+public class DiscussionCommentEntity implements Serializable {
     private Long id;
 
     private Long userId;
 
-    private Long topicId;
+    private Long discussionId;
 
     private String author;
 
-    private String title;
-
     private String content;
-
-    private String tags;
-
-    private Integer viewCount;
-
-    private Integer commentCount;
 
     private Date dateCreated;
 
@@ -52,12 +44,12 @@ public class DiscussionEntity implements Serializable {
         this.userId = userId;
     }
 
-    public Long getTopicId() {
-        return topicId;
+    public Long getDiscussionId() {
+        return discussionId;
     }
 
-    public void setTopicId(Long topicId) {
-        this.topicId = topicId;
+    public void setDiscussionId(Long discussionId) {
+        this.discussionId = discussionId;
     }
 
     public String getAuthor() {
@@ -68,44 +60,12 @@ public class DiscussionEntity implements Serializable {
         this.author = author == null ? null : author.trim();
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
-    }
-
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
-    }
-
-    public String getTags() {
-        return tags;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags == null ? null : tags.trim();
-    }
-
-    public Integer getViewCount() {
-        return viewCount;
-    }
-
-    public void setViewCount(Integer viewCount) {
-        this.viewCount = viewCount;
-    }
-
-    public Integer getCommentCount() {
-        return commentCount;
-    }
-
-    public void setCommentCount(Integer commentCount) {
-        this.commentCount = commentCount;
     }
 
     public Date getDateCreated() {

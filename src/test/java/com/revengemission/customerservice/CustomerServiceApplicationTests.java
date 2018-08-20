@@ -17,7 +17,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,6 +75,7 @@ public class CustomerServiceApplicationTests {
     }
 
 
+    @Ignore
     @Test
     @Transactional
     //@Rollback(value = false)
@@ -90,20 +90,12 @@ public class CustomerServiceApplicationTests {
         discussionEntity.setAuthor("张三");
         discussionEntity.setTitle("月季种植");
         discussionEntity.setContent("怎么种植，如何培育，如何过冬");
-        List<Map<String,String>> list=new ArrayList<>();
-        Map<String,String> a=new HashMap<>();
-        a.put("tag","种植1");
-        list.add(a);
+        List<String> list=new ArrayList<>();
+        list.add("种植");
+        list.add("培育");
+        list.add("过冬");
 
-        Map<String,String> b=new HashMap<>();
-        b.put("tag","培育2");
-        list.add(b);
-
-        Map<String,String> c=new HashMap<>();
-        c.put("tag","过冬3");
-        list.add(c);
-
-        //discussionEntity.setTags("[{\"tag\":\"种植\"},{\"tag\":\"培育\"},{\"tag\":\"过冬\"}]");
+        //discussionEntity.setTags("[\"种植\",\"培育\",\"过冬\"]");
         discussionEntity.setTags(JacksonJSONUtils.objectToJSONString(list));
         discussionEntityMapper.insert(discussionEntity);
         System.out.println("==========="+JacksonJSONUtils.objectToJSONString(discussionEntity));

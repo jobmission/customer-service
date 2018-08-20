@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DiscussionEntityExample {
+public class DiscussionCommentEntityExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public DiscussionEntityExample() {
+    public DiscussionCommentEntityExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -225,63 +225,63 @@ public class DiscussionEntityExample {
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdIsNull() {
-            addCriterion("topic_id is null");
+        public Criteria andDiscussionIdIsNull() {
+            addCriterion("discussion_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdIsNotNull() {
-            addCriterion("topic_id is not null");
+        public Criteria andDiscussionIdIsNotNull() {
+            addCriterion("discussion_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdEqualTo(Long value) {
-            addCriterion("topic_id =", value, "topicId");
+        public Criteria andDiscussionIdEqualTo(Long value) {
+            addCriterion("discussion_id =", value, "discussionId");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdNotEqualTo(Long value) {
-            addCriterion("topic_id <>", value, "topicId");
+        public Criteria andDiscussionIdNotEqualTo(Long value) {
+            addCriterion("discussion_id <>", value, "discussionId");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdGreaterThan(Long value) {
-            addCriterion("topic_id >", value, "topicId");
+        public Criteria andDiscussionIdGreaterThan(Long value) {
+            addCriterion("discussion_id >", value, "discussionId");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("topic_id >=", value, "topicId");
+        public Criteria andDiscussionIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("discussion_id >=", value, "discussionId");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdLessThan(Long value) {
-            addCriterion("topic_id <", value, "topicId");
+        public Criteria andDiscussionIdLessThan(Long value) {
+            addCriterion("discussion_id <", value, "discussionId");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdLessThanOrEqualTo(Long value) {
-            addCriterion("topic_id <=", value, "topicId");
+        public Criteria andDiscussionIdLessThanOrEqualTo(Long value) {
+            addCriterion("discussion_id <=", value, "discussionId");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdIn(List<Long> values) {
-            addCriterion("topic_id in", values, "topicId");
+        public Criteria andDiscussionIdIn(List<Long> values) {
+            addCriterion("discussion_id in", values, "discussionId");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdNotIn(List<Long> values) {
-            addCriterion("topic_id not in", values, "topicId");
+        public Criteria andDiscussionIdNotIn(List<Long> values) {
+            addCriterion("discussion_id not in", values, "discussionId");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdBetween(Long value1, Long value2) {
-            addCriterion("topic_id between", value1, value2, "topicId");
+        public Criteria andDiscussionIdBetween(Long value1, Long value2) {
+            addCriterion("discussion_id between", value1, value2, "discussionId");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdNotBetween(Long value1, Long value2) {
-            addCriterion("topic_id not between", value1, value2, "topicId");
+        public Criteria andDiscussionIdNotBetween(Long value1, Long value2) {
+            addCriterion("discussion_id not between", value1, value2, "discussionId");
             return (Criteria) this;
         }
 
@@ -355,76 +355,6 @@ public class DiscussionEntityExample {
             return (Criteria) this;
         }
 
-        public Criteria andTitleIsNull() {
-            addCriterion("title is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTitleIsNotNull() {
-            addCriterion("title is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTitleEqualTo(String value) {
-            addCriterion("title =", value, "title");
-            return (Criteria) this;
-        }
-
-        public Criteria andTitleNotEqualTo(String value) {
-            addCriterion("title <>", value, "title");
-            return (Criteria) this;
-        }
-
-        public Criteria andTitleGreaterThan(String value) {
-            addCriterion("title >", value, "title");
-            return (Criteria) this;
-        }
-
-        public Criteria andTitleGreaterThanOrEqualTo(String value) {
-            addCriterion("title >=", value, "title");
-            return (Criteria) this;
-        }
-
-        public Criteria andTitleLessThan(String value) {
-            addCriterion("title <", value, "title");
-            return (Criteria) this;
-        }
-
-        public Criteria andTitleLessThanOrEqualTo(String value) {
-            addCriterion("title <=", value, "title");
-            return (Criteria) this;
-        }
-
-        public Criteria andTitleLike(String value) {
-            addCriterion("title like", value, "title");
-            return (Criteria) this;
-        }
-
-        public Criteria andTitleNotLike(String value) {
-            addCriterion("title not like", value, "title");
-            return (Criteria) this;
-        }
-
-        public Criteria andTitleIn(List<String> values) {
-            addCriterion("title in", values, "title");
-            return (Criteria) this;
-        }
-
-        public Criteria andTitleNotIn(List<String> values) {
-            addCriterion("title not in", values, "title");
-            return (Criteria) this;
-        }
-
-        public Criteria andTitleBetween(String value1, String value2) {
-            addCriterion("title between", value1, value2, "title");
-            return (Criteria) this;
-        }
-
-        public Criteria andTitleNotBetween(String value1, String value2) {
-            addCriterion("title not between", value1, value2, "title");
-            return (Criteria) this;
-        }
-
         public Criteria andContentIsNull() {
             addCriterion("content is null");
             return (Criteria) this;
@@ -492,196 +422,6 @@ public class DiscussionEntityExample {
 
         public Criteria andContentNotBetween(String value1, String value2) {
             addCriterion("content not between", value1, value2, "content");
-            return (Criteria) this;
-        }
-
-        public Criteria andTagsIsNull() {
-            addCriterion("tags is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTagsIsNotNull() {
-            addCriterion("tags is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTagsEqualTo(String value) {
-            addCriterion("tags =", value, "tags");
-            return (Criteria) this;
-        }
-
-        public Criteria andTagsNotEqualTo(String value) {
-            addCriterion("tags <>", value, "tags");
-            return (Criteria) this;
-        }
-
-        public Criteria andTagsGreaterThan(String value) {
-            addCriterion("tags >", value, "tags");
-            return (Criteria) this;
-        }
-
-        public Criteria andTagsGreaterThanOrEqualTo(String value) {
-            addCriterion("tags >=", value, "tags");
-            return (Criteria) this;
-        }
-
-        public Criteria andTagsLessThan(String value) {
-            addCriterion("tags <", value, "tags");
-            return (Criteria) this;
-        }
-
-        public Criteria andTagsLessThanOrEqualTo(String value) {
-            addCriterion("tags <=", value, "tags");
-            return (Criteria) this;
-        }
-
-        public Criteria andTagsLike(String value) {
-            addCriterion("tags like", value, "tags");
-            return (Criteria) this;
-        }
-
-        public Criteria andTagsNotLike(String value) {
-            addCriterion("tags not like", value, "tags");
-            return (Criteria) this;
-        }
-
-        public Criteria andTagsIn(List<String> values) {
-            addCriterion("tags in", values, "tags");
-            return (Criteria) this;
-        }
-
-        public Criteria andTagsNotIn(List<String> values) {
-            addCriterion("tags not in", values, "tags");
-            return (Criteria) this;
-        }
-
-        public Criteria andTagsBetween(String value1, String value2) {
-            addCriterion("tags between", value1, value2, "tags");
-            return (Criteria) this;
-        }
-
-        public Criteria andTagsNotBetween(String value1, String value2) {
-            addCriterion("tags not between", value1, value2, "tags");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountIsNull() {
-            addCriterion("view_count is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountIsNotNull() {
-            addCriterion("view_count is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountEqualTo(Integer value) {
-            addCriterion("view_count =", value, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountNotEqualTo(Integer value) {
-            addCriterion("view_count <>", value, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountGreaterThan(Integer value) {
-            addCriterion("view_count >", value, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountGreaterThanOrEqualTo(Integer value) {
-            addCriterion("view_count >=", value, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountLessThan(Integer value) {
-            addCriterion("view_count <", value, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountLessThanOrEqualTo(Integer value) {
-            addCriterion("view_count <=", value, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountIn(List<Integer> values) {
-            addCriterion("view_count in", values, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountNotIn(List<Integer> values) {
-            addCriterion("view_count not in", values, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountBetween(Integer value1, Integer value2) {
-            addCriterion("view_count between", value1, value2, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountNotBetween(Integer value1, Integer value2) {
-            addCriterion("view_count not between", value1, value2, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentCountIsNull() {
-            addCriterion("comment_count is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentCountIsNotNull() {
-            addCriterion("comment_count is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentCountEqualTo(Integer value) {
-            addCriterion("comment_count =", value, "commentCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentCountNotEqualTo(Integer value) {
-            addCriterion("comment_count <>", value, "commentCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentCountGreaterThan(Integer value) {
-            addCriterion("comment_count >", value, "commentCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentCountGreaterThanOrEqualTo(Integer value) {
-            addCriterion("comment_count >=", value, "commentCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentCountLessThan(Integer value) {
-            addCriterion("comment_count <", value, "commentCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentCountLessThanOrEqualTo(Integer value) {
-            addCriterion("comment_count <=", value, "commentCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentCountIn(List<Integer> values) {
-            addCriterion("comment_count in", values, "commentCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentCountNotIn(List<Integer> values) {
-            addCriterion("comment_count not in", values, "commentCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentCountBetween(Integer value1, Integer value2) {
-            addCriterion("comment_count between", value1, value2, "commentCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentCountNotBetween(Integer value1, Integer value2) {
-            addCriterion("comment_count not between", value1, value2, "commentCount");
             return (Criteria) this;
         }
 

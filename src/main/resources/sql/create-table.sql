@@ -1,6 +1,6 @@
 # create table
-
-CREATE TABLE user_account_entity
+# 用户表
+CREATE TABLE IF NOT EXISTS user_account_entity
 (
   id            BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   username      VARCHAR(20) COMMENT '用户登录名,必须唯一，字母,邮箱或者手机号等',
@@ -20,7 +20,8 @@ CREATE TABLE user_account_entity
   CONSTRAINT unique_username UNIQUE (username)
 );
 
-CREATE TABLE conversation_entity
+# 会话表
+CREATE TABLE IF NOT EXISTS conversation_entity
 (
   id            BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   browser       VARCHAR(255),
@@ -40,7 +41,8 @@ CREATE TABLE conversation_entity
   version       INT(11)                         DEFAULT '0'
 );
 
-CREATE TABLE conversation_message_entity
+# 消息表
+CREATE TABLE IF NOT EXISTS conversation_message_entity
 (
   id              BIGINT(20) PRIMARY KEY NOT NULL              AUTO_INCREMENT,
   conversation_id BIGINT(20)             NOT NULL
@@ -57,7 +59,8 @@ CREATE TABLE conversation_message_entity
   version         INT(11)                                      DEFAULT '0'
 );
 
-CREATE TABLE discussion_topic_entity
+# 帖子主题
+CREATE TABLE IF NOT EXISTS discussion_topic_entity
 (
   id            BIGINT(20) PRIMARY KEY NOT NULL              AUTO_INCREMENT,
   topic         VARCHAR(20)            not null              default '',
@@ -71,7 +74,8 @@ CREATE TABLE discussion_topic_entity
   CONSTRAINT unique_topic UNIQUE (topic)
 );
 
-CREATE TABLE discussion_entity
+# 帖子表
+CREATE TABLE IF NOT EXISTS discussion_entity
 (
   id            BIGINT(20) PRIMARY KEY NOT NULL              AUTO_INCREMENT,
   user_id       BIGINT(20)             NOT NULL
@@ -81,7 +85,9 @@ CREATE TABLE discussion_entity
   author        VARCHAR(20),
   title         VARCHAR(40),
   content       VARCHAR(1000),
-  tags           json comment '标签',
+  tags          json comment '标签',
+  view_count    INT(11)                NOT NULL              DEFAULT '0',
+  comment_count INT(11)                NOT NULL              DEFAULT '0',
   date_created  DATETIME,
   last_modified DATETIME,
   record_status INT(11)                NOT NULL              DEFAULT '0',
@@ -90,5 +96,24 @@ CREATE TABLE discussion_entity
   COMMENT '优先级',
   version       INT(11)                                      DEFAULT '0',
   FOREIGN KEY (topic_id) REFERENCES discussion_topic_entity (id)
+);
+
+# 帖子评论表
+CREATE TABLE IF NOT EXISTS discussion_comment_entity
+(
+  id            BIGINT(20) PRIMARY KEY NOT NULL              AUTO_INCREMENT,
+  user_id       BIGINT(20)             NOT NULL
+  COMMENT '发帖者id',
+  discussion_id BIGINT(20)             NOT NULL
+  COMMENT '帖id',
+  author        VARCHAR(20),
+  content       VARCHAR(1000),
+  date_created  DATETIME,
+  last_modified DATETIME,
+  record_status INT(11)                NOT NULL              DEFAULT '0',
+  remarks       VARCHAR(255),
+  sort_priority INT(11)                                      DEFAULT '0'
+  COMMENT '优先级',
+  version       INT(11)                                      DEFAULT '0'
 );
 

@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.revengemission.customerservice.persistence.mapper.DiscussionEntityMapper">
-  <resultMap id="BaseResultMap" type="com.revengemission.customerservice.persistence.entity.DiscussionEntity">
+<mapper namespace="com.revengemission.customerservice.persistence.mapper.DiscussionCommentEntityMapper">
+  <resultMap id="BaseResultMap" type="com.revengemission.customerservice.persistence.entity.DiscussionCommentEntity">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="topic_id" jdbcType="BIGINT" property="topicId" />
+    <result column="discussion_id" jdbcType="BIGINT" property="discussionId" />
     <result column="author" jdbcType="VARCHAR" property="author" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="tags" jdbcType="CHAR" property="tags" />
-    <result column="view_count" jdbcType="INTEGER" property="viewCount" />
-    <result column="comment_count" jdbcType="INTEGER" property="commentCount" />
     <result column="date_created" jdbcType="TIMESTAMP" property="dateCreated" />
     <result column="last_modified" jdbcType="TIMESTAMP" property="lastModified" />
     <result column="record_status" jdbcType="INTEGER" property="recordStatus" />
@@ -77,16 +73,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, topic_id, author, title, content, tags, view_count, comment_count, date_created, 
-    last_modified, record_status, remarks, sort_priority, version
+    id, user_id, discussion_id, author, content, date_created, last_modified, record_status, 
+    remarks, sort_priority, version
   </sql>
-  <select id="selectByExample" parameterType="com.revengemission.customerservice.persistence.entity.DiscussionEntityExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.revengemission.customerservice.persistence.entity.DiscussionCommentEntityExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from discussion_entity
+    from discussion_comment_entity
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -97,63 +93,49 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from discussion_entity
+    from discussion_comment_entity
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from discussion_entity
+    delete from discussion_comment_entity
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.revengemission.customerservice.persistence.entity.DiscussionEntityExample">
-    delete from discussion_entity
+  <delete id="deleteByExample" parameterType="com.revengemission.customerservice.persistence.entity.DiscussionCommentEntityExample">
+    delete from discussion_comment_entity
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.revengemission.customerservice.persistence.entity.DiscussionEntity">
+  <insert id="insert" parameterType="com.revengemission.customerservice.persistence.entity.DiscussionCommentEntity">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into discussion_entity (user_id, topic_id, author, 
-      title, content, tags, 
-      view_count, comment_count, date_created, 
-      last_modified, record_status, remarks, 
-      sort_priority, version)
-    values (#{userId,jdbcType=BIGINT}, #{topicId,jdbcType=BIGINT}, #{author,jdbcType=VARCHAR}, 
-      #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{tags,jdbcType=CHAR}, 
-      #{viewCount,jdbcType=INTEGER}, #{commentCount,jdbcType=INTEGER}, #{dateCreated,jdbcType=TIMESTAMP}, 
-      #{lastModified,jdbcType=TIMESTAMP}, #{recordStatus,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, 
-      #{sortPriority,jdbcType=INTEGER}, #{version,jdbcType=INTEGER})
+    insert into discussion_comment_entity (user_id, discussion_id, author, 
+      content, date_created, last_modified, 
+      record_status, remarks, sort_priority, 
+      version)
+    values (#{userId,jdbcType=BIGINT}, #{discussionId,jdbcType=BIGINT}, #{author,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{dateCreated,jdbcType=TIMESTAMP}, #{lastModified,jdbcType=TIMESTAMP}, 
+      #{recordStatus,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, #{sortPriority,jdbcType=INTEGER}, 
+      #{version,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.revengemission.customerservice.persistence.entity.DiscussionEntity">
+  <insert id="insertSelective" parameterType="com.revengemission.customerservice.persistence.entity.DiscussionCommentEntity">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into discussion_entity
+    insert into discussion_comment_entity
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         user_id,
       </if>
-      <if test="topicId != null">
-        topic_id,
+      <if test="discussionId != null">
+        discussion_id,
       </if>
       <if test="author != null">
         author,
       </if>
-      <if test="title != null">
-        title,
-      </if>
       <if test="content != null">
         content,
-      </if>
-      <if test="tags != null">
-        tags,
-      </if>
-      <if test="viewCount != null">
-        view_count,
-      </if>
-      <if test="commentCount != null">
-        comment_count,
       </if>
       <if test="dateCreated != null">
         date_created,
@@ -172,26 +154,14 @@
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
       </if>
-      <if test="topicId != null">
-        #{topicId,jdbcType=BIGINT},
+      <if test="discussionId != null">
+        #{discussionId,jdbcType=BIGINT},
       </if>
       <if test="author != null">
         #{author,jdbcType=VARCHAR},
       </if>
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="tags != null">
-        #{tags,jdbcType=CHAR},
-      </if>
-      <if test="viewCount != null">
-        #{viewCount,jdbcType=INTEGER},
-      </if>
-      <if test="commentCount != null">
-        #{commentCount,jdbcType=INTEGER},
       </if>
       <if test="dateCreated != null">
         #{dateCreated,jdbcType=TIMESTAMP},
@@ -207,14 +177,14 @@
       #{version,jdbcType=INTEGER},
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.revengemission.customerservice.persistence.entity.DiscussionEntityExample" resultType="java.lang.Long">
-    select count(*) from discussion_entity
+  <select id="countByExample" parameterType="com.revengemission.customerservice.persistence.entity.DiscussionCommentEntityExample" resultType="java.lang.Long">
+    select count(*) from discussion_comment_entity
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update discussion_entity
+    update discussion_comment_entity
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
@@ -222,26 +192,14 @@
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=BIGINT},
       </if>
-      <if test="record.topicId != null">
-        topic_id = #{record.topicId,jdbcType=BIGINT},
+      <if test="record.discussionId != null">
+        discussion_id = #{record.discussionId,jdbcType=BIGINT},
       </if>
       <if test="record.author != null">
         author = #{record.author,jdbcType=VARCHAR},
       </if>
-      <if test="record.title != null">
-        title = #{record.title,jdbcType=VARCHAR},
-      </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=VARCHAR},
-      </if>
-      <if test="record.tags != null">
-        tags = #{record.tags,jdbcType=CHAR},
-      </if>
-      <if test="record.viewCount != null">
-        view_count = #{record.viewCount,jdbcType=INTEGER},
-      </if>
-      <if test="record.commentCount != null">
-        comment_count = #{record.commentCount,jdbcType=INTEGER},
       </if>
       <if test="record.dateCreated != null">
         date_created = #{record.dateCreated,jdbcType=TIMESTAMP},
@@ -267,16 +225,12 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update discussion_entity
+    update discussion_comment_entity
     set id = #{record.id,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
-      topic_id = #{record.topicId,jdbcType=BIGINT},
+      discussion_id = #{record.discussionId,jdbcType=BIGINT},
       author = #{record.author,jdbcType=VARCHAR},
-      title = #{record.title,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
-      tags = #{record.tags,jdbcType=CHAR},
-      view_count = #{record.viewCount,jdbcType=INTEGER},
-      comment_count = #{record.commentCount,jdbcType=INTEGER},
       date_created = #{record.dateCreated,jdbcType=TIMESTAMP},
       last_modified = #{record.lastModified,jdbcType=TIMESTAMP},
       record_status = #{record.recordStatus,jdbcType=INTEGER},
@@ -287,32 +241,20 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.revengemission.customerservice.persistence.entity.DiscussionEntity">
-    update discussion_entity
+  <update id="updateByPrimaryKeySelective" parameterType="com.revengemission.customerservice.persistence.entity.DiscussionCommentEntity">
+    update discussion_comment_entity
     <set>
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="topicId != null">
-        topic_id = #{topicId,jdbcType=BIGINT},
+      <if test="discussionId != null">
+        discussion_id = #{discussionId,jdbcType=BIGINT},
       </if>
       <if test="author != null">
         author = #{author,jdbcType=VARCHAR},
       </if>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
-      </if>
       <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="tags != null">
-        tags = #{tags,jdbcType=CHAR},
-      </if>
-      <if test="viewCount != null">
-        view_count = #{viewCount,jdbcType=INTEGER},
-      </if>
-      <if test="commentCount != null">
-        comment_count = #{commentCount,jdbcType=INTEGER},
       </if>
       <if test="dateCreated != null">
         date_created = #{dateCreated,jdbcType=TIMESTAMP},
@@ -335,16 +277,12 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.revengemission.customerservice.persistence.entity.DiscussionEntity">
-    update discussion_entity
+  <update id="updateByPrimaryKey" parameterType="com.revengemission.customerservice.persistence.entity.DiscussionCommentEntity">
+    update discussion_comment_entity
     set user_id = #{userId,jdbcType=BIGINT},
-      topic_id = #{topicId,jdbcType=BIGINT},
+      discussion_id = #{discussionId,jdbcType=BIGINT},
       author = #{author,jdbcType=VARCHAR},
-      title = #{title,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
-      tags = #{tags,jdbcType=CHAR},
-      view_count = #{viewCount,jdbcType=INTEGER},
-      comment_count = #{commentCount,jdbcType=INTEGER},
       date_created = #{dateCreated,jdbcType=TIMESTAMP},
       last_modified = #{lastModified,jdbcType=TIMESTAMP},
       record_status = #{recordStatus,jdbcType=INTEGER},
