@@ -8,7 +8,7 @@ public class DiscussionEntity implements Serializable {
 
     private Long userId;
 
-    private Long topicId;
+    private Long discussionTopicId;
 
     private String author;
 
@@ -52,12 +52,12 @@ public class DiscussionEntity implements Serializable {
         this.userId = userId;
     }
 
-    public Long getTopicId() {
-        return topicId;
+    public Long getDiscussionTopicId() {
+        return discussionTopicId;
     }
 
-    public void setTopicId(Long topicId) {
-        this.topicId = topicId;
+    public void setDiscussionTopicId(Long discussionTopicId) {
+        this.discussionTopicId = discussionTopicId;
     }
 
     public String getAuthor() {

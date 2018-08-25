@@ -2,25 +2,46 @@ package com.revengemission.customerservice.persistence.entity;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ConversationEntityExample {
-    protected String orderByClause;
-
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
+    private Map<String, String> orderByClause;
+
+    private List<String> tableFields;
+
     public ConversationEntityExample() {
         oredCriteria = new ArrayList<Criteria>();
-    }
-
-    public void setOrderByClause(String orderByClause) {
-        this.orderByClause = orderByClause;
+        tableFields=new ArrayList<>();
+        tableFields.add("id");
+        tableFields.add("browser");
+        tableFields.add("initiator_id");
+        tableFields.add("ip");
+        tableFields.add("os");
+        tableFields.add("recipient_id");
+        tableFields.add("status");
+        tableFields.add("username");
+        tableFields.add("date_created");
+        tableFields.add("last_modified");
+        tableFields.add("record_status");
+        tableFields.add("remarks");
+        tableFields.add("sort_priority");
+        tableFields.add("version");
     }
 
     public String getOrderByClause() {
-        return orderByClause;
+        if (orderByClause !=null && orderByClause.size() > 0) {
+            StringBuffer sb=new StringBuffer();
+            orderByClause.forEach((k,v)->{sb.append(','+k+' '+v);});
+            return sb.toString().replaceFirst(",","");
+        } else {
+            return null;
+        }
     }
 
     public void setDistinct(boolean distinct) {
@@ -62,6 +83,17 @@ public class ConversationEntityExample {
         oredCriteria.clear();
         orderByClause = null;
         distinct = false;
+    }
+
+    public void addOrderBy(String fieldName, String sortOrder) {
+        if (tableFields.contains(fieldName) && ("asc".equalsIgnoreCase(sortOrder)) || "desc".equalsIgnoreCase(sortOrder)){
+            if (orderByClause!=null){
+                orderByClause.put(fieldName,sortOrder);
+            } else {
+                orderByClause=new LinkedHashMap<>();
+                orderByClause.put(fieldName,sortOrder);
+            }
+        }
     }
 
     protected abstract static class GeneratedCriteria {

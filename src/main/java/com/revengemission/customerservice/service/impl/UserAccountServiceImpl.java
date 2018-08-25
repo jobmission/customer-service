@@ -1,5 +1,6 @@
 package com.revengemission.customerservice.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.revengemission.customerservice.domain.GlobalConstant;
 import com.revengemission.customerservice.domain.JsonObjects;
 import com.revengemission.customerservice.domain.ResponseResult;
@@ -39,7 +40,10 @@ public class UserAccountServiceImpl extends BaseServiceImpl implements UserAccou
 
         UserAccountEntityExample example = new UserAccountEntityExample();
         example.createCriteria().andRoleEqualTo(GlobalConstant.ROLE_COMMISSIONER);
-        example.setOrderByClause(sortOrder + " " + sortOrder);
+        example.addOrderBy(sortField, sortOrder);
+        if (pageNum > 0 && pageSize > 0) {
+            PageHelper.startPage(pageNum, pageSize, false);
+        }
         List<UserAccountEntity> entityList = userAccountEntityMapper.selectByExample(example);
         long total = userAccountEntityMapper.countByExample(example);
         jsonObjects.setCurrentPage(pageNum);

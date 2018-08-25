@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>index</title>
+    <link rel="stylesheet" href="../../static/assets/bootstrap/css/bootstrap.min.css"
+          th:href="@{/assets/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/assets/web-fonts-with-css/css/fontawesome-all.min.css"
+          th:href="@{/assets/web-fonts-with-css/css/fontawesome-all.min.css}"/>
+    <link rel="stylesheet" href="../../static/assets/summernote/summernote-lite.css"
+          th:href="@{/assets/summernote/summernote-lite.css}"/>
+    <link rel="stylesheet" href="../../static/assets/sweetalert2/sweetalert2.min.css"
+          th:href="@{/assets/sweetalert2/sweetalert2.min.css}"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light static-top sb-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">Start Bootstrap</a>
+        <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="navbar-collapse collapse" id="navbarResponsive">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item" th:each="topic,topicStat : ${topicElements}">
+                    <a class="nav-link" th:href="@{'/bbs/latest/'+${topic.id}}" th:title="${topic.topic}"
+                       th:text="${topic.topic}">topic</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container mt-2">
+    <form id="publishForm">
+        <div class="row">
+            <div class="col-sm-9">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <input type="text" class="form-control" id="title" name="title" placeholder="帖子标题"
+                               required="required">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <select id="discussionTopicId" class="form-control" name="discussionTopicId"
+                                required="required">
+                            <option value="">请选择板块</option>
+                            <option th:each="topic,topicStat : ${topicElements}" th:value="${topic.id}"
+                                    th:text="${topic.topic}">...
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="summernote"></div>
+                </div>
+                <div class="row">
+                    <button type="submit" class="btn btn-primary publish">发表帖子</button>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <h5 class="text-center">优质帖子</h5>
+                <img th:src="@{/img/200x200.png}" alt="..." class="rounded-circle img-fluid">
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script src="../../static/assets/jquery-3.3.1.min.js"
+        th:src="@{/assets/jquery-3.3.1.min.js}"></script>
+<script src="../../static/assets/bootstrap/js/bootstrap.min.js"
+        th:src="@{/assets/bootstrap/js/bootstrap.min.js}"></script>
+<script src="../../static/assets/bootstrap/js/popper.min.js"
+        th:src="@{/assets/bootstrap/js/popper.min.js}"></script>
+<script src="../../static/assets/moment-with-locales.min.js"
+        th:src="@{/assets/moment-with-locales.min.js}"></script>
+<script src="../../static/assets/summernote/summernote-lite.js"
+        th:src="@{/assets/summernote/summernote-lite.js}"></script>
+<script src="../../static/assets/sweetalert2/sweetalert2.min.js"
+        th:src="@{/assets/sweetalert2/sweetalert2.min.js}"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#summernote').summernote({
+            minHeight: 260,             // set minimum height of editor
+            callbacks: {
+                onImageUpload: function (files) {
+                    //上传图片到服务器，使用了formData对象，至于兼容性...据说对低版本IE不太友好
+                    var formData = new FormData();
+                    formData.append('files', files[0]);
+                    $.ajax({
+                        url: '/upload/public',//后台文件上传接口
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            console.log("data:" + JSON.stringify(data));
+                            if (data.status == 1) {
+                                for (x in data.files) {
+                                    var imgNode = document.createElement("img");
+                                    //读取后台返回的图片url
+                                    imgNode.src = data.hostImage + "/" + data.files[x];
+                                    $('#summernote').summernote('insertImage', imgNode.src);
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+        $("#publishForm").on("submit", function (e) {
+            e.preventDefault();
+            if ($("#discussionTopicId").val() == null || $("#discussionTopicId").val() == "") {
+                Swal('Oops...', '请选择板块!', 'error');
+                return false;
+            }
+
+            var richText = $('#summernote').summernote('code');
+            if (richText == "" || richText.length < 20) {
+                Swal('Oops...', '请仔细填写帖子内容!', 'error');
+                return false;
+            }
+            var formData = new FormData();
+            formData.append('title', $("#title").val());
+            formData.append('discussionTopicId', $("#discussionTopicId").val());
+            formData.append('content', richText);
+            $.ajax({
+                url: '/bbs/publish',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.status == 1) {
+                        swal({
+                                text: '帖子发布成功!',
+                                type: 'success'
+                            }
+                        ).then(function (result) {
+                            if (result.value) {
+                                window.location.href = "/bbs/latest";
+                            }
+                        })
+                    } else {
+                        Swal('Oops...', '帖子发布失败，请重试!', 'error');
+                    }
+                }
+            });
+            return false;
+        })
+    });
+</script>
+</body>
+</html>

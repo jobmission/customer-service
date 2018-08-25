@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.revengemission.customerservice.persistence.entity.DiscussionEntity">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="topic_id" jdbcType="BIGINT" property="topicId" />
+    <result column="discussion_topic_id" jdbcType="BIGINT" property="discussionTopicId" />
     <result column="author" jdbcType="VARCHAR" property="author" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="content" jdbcType="VARCHAR" property="content" />
@@ -77,8 +77,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, topic_id, author, title, content, tags, view_count, comment_count, date_created, 
-    last_modified, record_status, remarks, sort_priority, version
+    id, user_id, discussion_topic_id, author, title, content, tags, view_count, comment_count, 
+    date_created, last_modified, record_status, remarks, sort_priority, version
   </sql>
   <select id="selectByExample" parameterType="com.revengemission.customerservice.persistence.entity.DiscussionEntityExample" resultMap="BaseResultMap">
     select
@@ -114,12 +114,12 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into discussion_entity (user_id, topic_id, author, 
+    insert into discussion_entity (user_id, discussion_topic_id, author, 
       title, content, tags, 
       view_count, comment_count, date_created, 
       last_modified, record_status, remarks, 
       sort_priority, version)
-    values (#{userId,jdbcType=BIGINT}, #{topicId,jdbcType=BIGINT}, #{author,jdbcType=VARCHAR}, 
+    values (#{userId,jdbcType=BIGINT}, #{discussionTopicId,jdbcType=BIGINT}, #{author,jdbcType=VARCHAR}, 
       #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{tags,jdbcType=CHAR}, 
       #{viewCount,jdbcType=INTEGER}, #{commentCount,jdbcType=INTEGER}, #{dateCreated,jdbcType=TIMESTAMP}, 
       #{lastModified,jdbcType=TIMESTAMP}, #{recordStatus,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, 
@@ -134,8 +134,8 @@
       <if test="userId != null">
         user_id,
       </if>
-      <if test="topicId != null">
-        topic_id,
+      <if test="discussionTopicId != null">
+        discussion_topic_id,
       </if>
       <if test="author != null">
         author,
@@ -172,8 +172,8 @@
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
       </if>
-      <if test="topicId != null">
-        #{topicId,jdbcType=BIGINT},
+      <if test="discussionTopicId != null">
+        #{discussionTopicId,jdbcType=BIGINT},
       </if>
       <if test="author != null">
         #{author,jdbcType=VARCHAR},
@@ -222,8 +222,8 @@
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=BIGINT},
       </if>
-      <if test="record.topicId != null">
-        topic_id = #{record.topicId,jdbcType=BIGINT},
+      <if test="record.discussionTopicId != null">
+        discussion_topic_id = #{record.discussionTopicId,jdbcType=BIGINT},
       </if>
       <if test="record.author != null">
         author = #{record.author,jdbcType=VARCHAR},
@@ -270,7 +270,7 @@
     update discussion_entity
     set id = #{record.id,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
-      topic_id = #{record.topicId,jdbcType=BIGINT},
+      discussion_topic_id = #{record.discussionTopicId,jdbcType=BIGINT},
       author = #{record.author,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
@@ -293,8 +293,8 @@
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="topicId != null">
-        topic_id = #{topicId,jdbcType=BIGINT},
+      <if test="discussionTopicId != null">
+        discussion_topic_id = #{discussionTopicId,jdbcType=BIGINT},
       </if>
       <if test="author != null">
         author = #{author,jdbcType=VARCHAR},
@@ -338,7 +338,7 @@
   <update id="updateByPrimaryKey" parameterType="com.revengemission.customerservice.persistence.entity.DiscussionEntity">
     update discussion_entity
     set user_id = #{userId,jdbcType=BIGINT},
-      topic_id = #{topicId,jdbcType=BIGINT},
+      discussion_topic_id = #{discussionTopicId,jdbcType=BIGINT},
       author = #{author,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},

@@ -2,25 +2,47 @@ package com.revengemission.customerservice.persistence.entity;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DiscussionEntityExample {
-    protected String orderByClause;
-
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
+    private Map<String, String> orderByClause;
+
+    private List<String> tableFields;
+
     public DiscussionEntityExample() {
         oredCriteria = new ArrayList<Criteria>();
-    }
-
-    public void setOrderByClause(String orderByClause) {
-        this.orderByClause = orderByClause;
+        tableFields=new ArrayList<>();
+        tableFields.add("id");
+        tableFields.add("user_id");
+        tableFields.add("discussion_topic_id");
+        tableFields.add("author");
+        tableFields.add("title");
+        tableFields.add("content");
+        tableFields.add("tags");
+        tableFields.add("view_count");
+        tableFields.add("comment_count");
+        tableFields.add("date_created");
+        tableFields.add("last_modified");
+        tableFields.add("record_status");
+        tableFields.add("remarks");
+        tableFields.add("sort_priority");
+        tableFields.add("version");
     }
 
     public String getOrderByClause() {
-        return orderByClause;
+        if (orderByClause !=null && orderByClause.size() > 0) {
+            StringBuffer sb=new StringBuffer();
+            orderByClause.forEach((k,v)->{sb.append(','+k+' '+v);});
+            return sb.toString().replaceFirst(",","");
+        } else {
+            return null;
+        }
     }
 
     public void setDistinct(boolean distinct) {
@@ -62,6 +84,17 @@ public class DiscussionEntityExample {
         oredCriteria.clear();
         orderByClause = null;
         distinct = false;
+    }
+
+    public void addOrderBy(String fieldName, String sortOrder) {
+        if (tableFields.contains(fieldName) && ("asc".equalsIgnoreCase(sortOrder)) || "desc".equalsIgnoreCase(sortOrder)){
+            if (orderByClause!=null){
+                orderByClause.put(fieldName,sortOrder);
+            } else {
+                orderByClause=new LinkedHashMap<>();
+                orderByClause.put(fieldName,sortOrder);
+            }
+        }
     }
 
     protected abstract static class GeneratedCriteria {
@@ -225,63 +258,63 @@ public class DiscussionEntityExample {
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdIsNull() {
-            addCriterion("topic_id is null");
+        public Criteria andDiscussionTopicIdIsNull() {
+            addCriterion("discussion_topic_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdIsNotNull() {
-            addCriterion("topic_id is not null");
+        public Criteria andDiscussionTopicIdIsNotNull() {
+            addCriterion("discussion_topic_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdEqualTo(Long value) {
-            addCriterion("topic_id =", value, "topicId");
+        public Criteria andDiscussionTopicIdEqualTo(Long value) {
+            addCriterion("discussion_topic_id =", value, "discussionTopicId");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdNotEqualTo(Long value) {
-            addCriterion("topic_id <>", value, "topicId");
+        public Criteria andDiscussionTopicIdNotEqualTo(Long value) {
+            addCriterion("discussion_topic_id <>", value, "discussionTopicId");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdGreaterThan(Long value) {
-            addCriterion("topic_id >", value, "topicId");
+        public Criteria andDiscussionTopicIdGreaterThan(Long value) {
+            addCriterion("discussion_topic_id >", value, "discussionTopicId");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("topic_id >=", value, "topicId");
+        public Criteria andDiscussionTopicIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("discussion_topic_id >=", value, "discussionTopicId");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdLessThan(Long value) {
-            addCriterion("topic_id <", value, "topicId");
+        public Criteria andDiscussionTopicIdLessThan(Long value) {
+            addCriterion("discussion_topic_id <", value, "discussionTopicId");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdLessThanOrEqualTo(Long value) {
-            addCriterion("topic_id <=", value, "topicId");
+        public Criteria andDiscussionTopicIdLessThanOrEqualTo(Long value) {
+            addCriterion("discussion_topic_id <=", value, "discussionTopicId");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdIn(List<Long> values) {
-            addCriterion("topic_id in", values, "topicId");
+        public Criteria andDiscussionTopicIdIn(List<Long> values) {
+            addCriterion("discussion_topic_id in", values, "discussionTopicId");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdNotIn(List<Long> values) {
-            addCriterion("topic_id not in", values, "topicId");
+        public Criteria andDiscussionTopicIdNotIn(List<Long> values) {
+            addCriterion("discussion_topic_id not in", values, "discussionTopicId");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdBetween(Long value1, Long value2) {
-            addCriterion("topic_id between", value1, value2, "topicId");
+        public Criteria andDiscussionTopicIdBetween(Long value1, Long value2) {
+            addCriterion("discussion_topic_id between", value1, value2, "discussionTopicId");
             return (Criteria) this;
         }
 
-        public Criteria andTopicIdNotBetween(Long value1, Long value2) {
-            addCriterion("topic_id not between", value1, value2, "topicId");
+        public Criteria andDiscussionTopicIdNotBetween(Long value1, Long value2) {
+            addCriterion("discussion_topic_id not between", value1, value2, "discussionTopicId");
             return (Criteria) this;
         }
 

@@ -85,12 +85,12 @@ public class CustomerServiceApplicationTests {
         discussionTopicEntityMapper.insert(discussionTopicEntity);
 
         DiscussionEntity discussionEntity = new DiscussionEntity();
-        discussionEntity.setTopicId(discussionTopicEntity.getId());
+        discussionEntity.setDiscussionTopicId(discussionTopicEntity.getId());
         discussionEntity.setUserId(1l);
         discussionEntity.setAuthor("张三");
         discussionEntity.setTitle("月季种植");
         discussionEntity.setContent("怎么种植，如何培育，如何过冬");
-        List<String> list=new ArrayList<>();
+        List<String> list = new ArrayList<>();
         list.add("种植");
         list.add("培育");
         list.add("过冬");
@@ -98,7 +98,7 @@ public class CustomerServiceApplicationTests {
         //discussionEntity.setTags("[\"种植\",\"培育\",\"过冬\"]");
         discussionEntity.setTags(JacksonJSONUtils.objectToJSONString(list));
         discussionEntityMapper.insert(discussionEntity);
-        System.out.println("==========="+JacksonJSONUtils.objectToJSONString(discussionEntity));
+        System.out.println("===========" + JacksonJSONUtils.objectToJSONString(discussionEntity));
 
     }
 }
