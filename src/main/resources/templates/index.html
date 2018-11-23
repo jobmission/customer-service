@@ -131,14 +131,6 @@
             // 订阅
             stompClient.subscribe('/topic/announce', function (data) {
                 console.log("announce=" + data.body);
-                /*会话维持*/
-                $.ajax({
-                    type: 'POST',
-                    url: "/refreshSession",
-                    success: function (result) {
-                        console.log(JSON.stringify(result));
-                    }
-                });
             });
             // 订阅
             stompClient.subscribe("/user/queue/talk", function (data) {

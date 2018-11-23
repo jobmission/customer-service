@@ -37,12 +37,6 @@ public class IndexController {
         return "index";
     }
 
-    @ResponseBody
-    @PostMapping(value = "refreshSession")
-    public ResponseResult refreshSession(Model model, HttpServletRequest request) {
-        return new ResponseResult();
-    }
-
     /*
     * queue
     * */
