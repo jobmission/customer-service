@@ -20,11 +20,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    /*
-        http://docs.spring.io/spring-security/site/docs/current/guides/html5//hellomvc-javaconfig.html
-        http://docs.spring.io/spring/docs/4.3.3.BUILD-SNAPSHOT/spring-framework-reference/htmlsingle/#mvc-config-enable
-        https://github.com/Robbert1/boot-stateless-auth/blob/master/src/main/java/com/jdriven/stateless/security/StatelessAuthenticationSecurityConfig.java
-    */
     @Autowired
     private MyAuthenticationProvider provider;//自定义验证
 
